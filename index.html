@@ -12,6 +12,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png">
 <title>PPS SCHOOL TOOLS</title>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Inter:wght@500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
 
@@ -593,15 +595,96 @@ input[readonly]{color:var(--ink-soft)}
 .login-error{min-height:16px; color:var(--danger); font-size:12px; font-weight:700; margin:6px 0 12px}
 .login-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px}
 
-/* ---------- Print (Fee Receipt only) ---------- */
+/* ---------- Admission tab specifics ---------- */
+.adm-row3{display:grid; grid-template-columns:2fr 1fr 1fr; gap:8px}
+.adm-row3 .lbl-sm{font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.3px; font-weight:700; margin:0 0 6px; opacity:.75}
+
+/* Hidden designed admission PDF template (screen-only hidden, shown on print) */
+#admpdf-template{display:none}
+#admpdf-page{
+  width:210mm; min-height:297mm; background:#ffffff;
+  font-family:'Georgia','Times New Roman',serif; color:#2b2b2b; position:relative;
+}
+#admpdf-page .admpdf-border-frame{
+  position:absolute; top:8mm; left:8mm; right:8mm; bottom:8mm;
+  border:3px double #0b3d2e; pointer-events:none;
+}
+#admpdf-page .admpdf-border-frame::before{
+  content:""; position:absolute; top:6px; left:6px; right:6px; bottom:6px; border:1px solid #c9a24b;
+}
+#admpdf-page .admpdf-content{position:relative; padding:20mm 16mm 14mm 16mm}
+#admpdf-page .admpdf-header{
+  text-align:center; padding-bottom:10px; border-bottom:3px solid #0b3d2e; margin-bottom:6px;
+}
+#admpdf-page .admpdf-school-name{
+  font-size:30px; letter-spacing:2px; color:#0b3d2e; font-weight:bold; text-transform:uppercase;
+}
+#admpdf-page .admpdf-school-tagline{
+  font-size:11px; color:#7a6a3c; letter-spacing:3px; margin-top:3px; text-transform:uppercase;
+}
+#admpdf-page .admpdf-title{text-align:center; margin:14px 0 18px 0}
+#admpdf-page .admpdf-title span{
+  display:inline-block; background:#0b3d2e; color:#f4d78e; padding:8px 40px;
+  font-size:20px; letter-spacing:4px; font-weight:bold; border-radius:3px; text-transform:uppercase;
+}
+#admpdf-page .admpdf-top-row{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px}
+#admpdf-page .admpdf-date-field{font-size:14px; padding-top:6px}
+#admpdf-page .admpdf-date-field .val{display:inline-block; border-bottom:1px dotted #555; min-width:160px; margin-left:6px; padding-bottom:2px}
+#admpdf-page .admpdf-photo-box{
+  width:100px; height:120px; border:2px solid #0b3d2e; display:flex; align-items:center; justify-content:center;
+  text-align:center; font-size:10px; color:#999; background:#fbfaf6;
+}
+#admpdf-page .admpdf-section{margin-bottom:18px}
+#admpdf-page .admpdf-section-title{
+  background:linear-gradient(to right, #0b3d2e, #14563f 60%, #0b3d2e); color:#f4d78e;
+  padding:7px 14px; font-size:14px; letter-spacing:2px; text-transform:uppercase; font-weight:bold;
+  border-radius:3px; margin-bottom:12px;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+#admpdf-page .admpdf-section-title::before{content:"\2756"; margin-right:8px; color:#c9a24b}
+#admpdf-page .admpdf-form-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px 24px; padding:0 6px}
+#admpdf-page .admpdf-field{display:flex; align-items:flex-end; font-size:14px}
+#admpdf-page .admpdf-field .label{white-space:nowrap; font-weight:bold; color:#0b3d2e; margin-right:8px}
+#admpdf-page .admpdf-field .val{flex:1; border-bottom:1px dotted #666; min-height:20px; padding-bottom:2px}
+#admpdf-page .admpdf-field.wide{grid-column:1 / -1}
+#admpdf-page .admpdf-academic-table{width:100%; border-collapse:collapse; font-size:13.5px}
+#admpdf-page .admpdf-academic-table th{
+  text-align:left; padding:8px 10px; background:#0b3d2e; color:#f4d78e; font-weight:bold;
+  text-transform:uppercase; font-size:11px; letter-spacing:.5px;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+#admpdf-page .admpdf-academic-table td{padding:8px 10px; border-bottom:1px solid #ddd}
+#admpdf-page .admpdf-academic-table tr:nth-child(even) td{background:#faf8f2}
+#admpdf-page .admpdf-declaration{
+  margin-top:26px; font-size:12.5px; color:#444; border-top:1px dashed #999; padding-top:12px; line-height:1.7;
+}
+#admpdf-page .admpdf-signatures{display:flex; justify-content:space-between; margin-top:40px; font-size:13px}
+#admpdf-page .admpdf-sign-box{text-align:center; width:40%}
+#admpdf-page .admpdf-sign-line{border-bottom:1px solid #333; height:40px; margin-bottom:6px}
+#admpdf-page .admpdf-footer{
+  margin-top:16px; text-align:center; font-size:10px; color:#8a8a8a;
+  border-top:1px solid #ddd; padding-top:6px; letter-spacing:1px;
+}
+#admpdf-page .admpdf-corner{position:absolute; width:24px; height:24px; border:2px solid #c9a24b}
+#admpdf-page .admpdf-cf-tl{top:10mm; left:10mm; border-right:none; border-bottom:none}
+#admpdf-page .admpdf-cf-tr{top:10mm; right:10mm; border-left:none; border-bottom:none}
+#admpdf-page .admpdf-cf-bl{bottom:10mm; left:10mm; border-right:none; border-top:none}
+#admpdf-page .admpdf-cf-br{bottom:10mm; right:10mm; border-left:none; border-top:none}
+
+/* ---------- Print (Fee Receipt & Admission) ---------- */
 @media print{
   body{background:#fff !important; padding:0 !important}
   #welcome,.menu-screen,.tabbar,.footer,.no-print,.login-modal{display:none !important}
-  #tab-attendance,#tab-reminder{display:none !important}
+  #tab-attendance,#tab-reminder,#tab-admission{display:none !important}
   .container{max-width:none !important}
   .receipt{box-shadow:none !important; background:#fff !important}
   @page{size:A5; margin:12mm}
   *{-webkit-print-color-adjust:exact !important; print-color-adjust:exact !important}
+
+  /* When printing the Admission PDF, hide the app shell entirely
+     and show only the designed A4 admission template */
+  body.printing-admission .container{display:none !important}
+  body.printing-admission #admpdf-template{display:block !important}
 }
 </style>
 </head>
@@ -633,6 +716,9 @@ input[readonly]{color:var(--ink-soft)}
       </div>
       <div class="menu-option-wrap">
         <button class="menu-option" type="button" onclick="tryTab('reminder')">🔔 Fee Reminder</button>
+      </div>
+      <div class="menu-option-wrap">
+        <button class="menu-option" type="button" onclick="tryTab('admission')">🎓 Admission</button>
       </div>
     </div>
   </div>
@@ -917,7 +1003,138 @@ input[readonly]{color:var(--ink-soft)}
     </div>
   </section>
 
+  <!-- ================= ADMISSION TAB ================= -->
+  <section id="tab-admission" class="tab-panel">
+    <div class="card no-print">
+      <div class="head-row">
+        <h1 id="admissionTitle" class="panel-title" aria-label="ADMISSION"></h1>
+        <span class="subtitle">PPS ADMISSION FORM</span>
+      </div>
+      <p class="panel-desc">Fill in the student's details, then generate the designed admission PDF.</p>
+    </div>
+
+    <div class="card no-print">
+      <div class="section-title">Student Information</div>
+      <div class="field"><span class="lbl">Date</span><input type="date" id="ad-date" placeholder="Admission date"></div>
+      <div class="field"><span class="lbl">Name</span><input type="text" id="ad-name" placeholder="Student's full name"></div>
+      <div class="actions-row">
+        <div class="field"><span class="lbl">Date of Birth</span><input type="date" id="ad-dob" placeholder="Date of birth"></div>
+        <div class="field">
+          <span class="lbl">Gender</span>
+          <select id="ad-gender">
+            <option value="" disabled selected>Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><span class="lbl">Address</span><input type="text" id="ad-address" placeholder="Home address"></div>
+    </div>
+
+    <div class="card no-print">
+      <div class="section-title">Parents Information</div>
+      <div class="actions-row">
+        <div class="field"><span class="lbl">Father Name</span><input type="text" id="ad-father" placeholder="Father's name"></div>
+        <div class="field"><span class="lbl">Contact</span><input type="tel" id="ad-contact" placeholder="Contact number"></div>
+      </div>
+    </div>
+
+    <div class="card no-print">
+      <div class="section-title">Previous Academic Records</div>
+      <div class="adm-row3">
+        <div><p class="lbl-sm">School Name</p><input type="text" id="ad-school1" placeholder="e.g. ABC Public School"></div>
+        <div><p class="lbl-sm">Class</p><input type="text" id="ad-class1" placeholder="e.g. 5th"></div>
+        <div><p class="lbl-sm">Year</p><input type="text" id="ad-year1" placeholder="e.g. 2025"></div>
+      </div>
+    </div>
+
+    <div class="card no-print">
+      <button class="btn btn-primary" type="button" onclick="generateAdmissionPdf()">🎓 Generate Admission PDF</button>
+      <div class="hint" style="text-align:center; padding-left:0; margin-top:10px;">PDF seedhi download ho jayegi — Downloads folder mein check karein.</div>
+    </div>
+  </section>
+
 </div>
+</div>
+
+<!-- ============ DESIGNED ADMISSION PDF TEMPLATE (only appears when printing) ============ -->
+<div id="admpdf-template">
+  <div id="admpdf-page">
+    <div class="admpdf-border-frame"></div>
+    <div class="admpdf-corner admpdf-cf-tl"></div>
+    <div class="admpdf-corner admpdf-cf-tr"></div>
+    <div class="admpdf-corner admpdf-cf-bl"></div>
+    <div class="admpdf-corner admpdf-cf-br"></div>
+
+    <div class="admpdf-content">
+      <div class="admpdf-header">
+        <div class="admpdf-school-name">Punjkora Public High School</div>
+        <div class="admpdf-school-tagline">Excellence in Education Since Establishment</div>
+      </div>
+
+      <div class="admpdf-title"><span>Admission Form</span></div>
+
+      <div class="admpdf-top-row">
+        <div class="admpdf-date-field">Date: <span class="val" id="admpdf-out-date">&nbsp;</span></div>
+        <div class="admpdf-photo-box">Paste<br>Passport Size<br>Photograph</div>
+      </div>
+
+      <div class="admpdf-section">
+        <div class="admpdf-section-title">Student Information</div>
+        <div class="admpdf-form-grid">
+          <div class="admpdf-field wide"><span class="label">Name:</span><span class="val" id="admpdf-out-name">&nbsp;</span></div>
+          <div class="admpdf-field"><span class="label">Date of Birth:</span><span class="val" id="admpdf-out-dob">&nbsp;</span></div>
+          <div class="admpdf-field"><span class="label">Gender:</span><span class="val" id="admpdf-out-gender">&nbsp;</span></div>
+          <div class="admpdf-field wide"><span class="label">Address:</span><span class="val" id="admpdf-out-address">&nbsp;</span></div>
+        </div>
+      </div>
+
+      <div class="admpdf-section">
+        <div class="admpdf-section-title">Parents Information</div>
+        <div class="admpdf-form-grid">
+          <div class="admpdf-field"><span class="label">Father Name:</span><span class="val" id="admpdf-out-father">&nbsp;</span></div>
+          <div class="admpdf-field"><span class="label">Contact:</span><span class="val" id="admpdf-out-contact">&nbsp;</span></div>
+        </div>
+      </div>
+
+      <div class="admpdf-section">
+        <div class="admpdf-section-title">Previous Academic Records</div>
+        <table class="admpdf-academic-table">
+          <thead>
+            <tr><th>School Name</th><th>Class</th><th>Year</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="admpdf-out-school1">&nbsp;</td>
+              <td id="admpdf-out-class1">&nbsp;</td>
+              <td id="admpdf-out-year1">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="admpdf-declaration">
+        I hereby declare that the information provided above is true and correct to the best of my knowledge.
+        I understand that any false information may result in the cancellation of admission.
+      </div>
+
+      <div class="admpdf-signatures">
+        <div class="admpdf-sign-box">
+          <div class="admpdf-sign-line"></div>
+          Parent / Guardian Signature
+        </div>
+        <div class="admpdf-sign-box">
+          <div class="admpdf-sign-line"></div>
+          Principal Signature
+        </div>
+      </div>
+
+      <div class="admpdf-footer">
+        PUNJKORA PUBLIC HIGH SCHOOL &nbsp;&bull;&nbsp; Admission Office &nbsp;&bull;&nbsp; This form is valid only when duly signed and stamped.
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -955,7 +1172,8 @@ function switchTab(name){
   document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
   document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
   document.getElementById("tab-"+name).classList.add("active");
-  document.querySelector('.tab-btn[data-tab="'+name+'"]').classList.add("active");
+  const btn = document.querySelector('.tab-btn[data-tab="'+name+'"]');
+  if(btn) btn.classList.add("active");
 }
 
 function proceedToTab(name){
@@ -1042,13 +1260,15 @@ setInterval(tickLiveClock, 1000);
 /* ============================================================
    SHARED: password lock for Fee Receipt / Fee Reminder
    (asked once per session — unlocks for the rest of the visit)
+   Only Attendance is open without a password.
    ============================================================ */
 const FEE_PASSWORD = "mr05";
 let feeUnlocked = sessionStorage.getItem("pps_fee_unlocked") === "1";
 let pendingTab = null;
+const OPEN_TABS = ["attendance"];
 
 function tryTab(name){
-  if(name === "attendance" || feeUnlocked){ proceedToTab(name); return; }
+  if(OPEN_TABS.indexOf(name) !== -1 || feeUnlocked){ proceedToTab(name); return; }
   pendingTab = name;
   openLoginModal();
 }
@@ -1095,6 +1315,7 @@ function buildGlitchTitle(elId, text){
 }
 buildGlitchTitle("receiptTitle","FEE RECEIPT");
 buildGlitchTitle("reminderTitle","FEE REMINDER");
+buildGlitchTitle("admissionTitle","ADMISSION");
 
 /* ============================================================
    ATTENDANCE TAB — logic unchanged, ids/functions namespaced
@@ -1666,6 +1887,94 @@ ${rows.map(([l,n])=>l+": "+fmt(n)+" روپے").join("\n")}
   window.fmSendSMS=sendSMS;
   window.fmResetForm=resetForm;
   window.fmCopyMessage=copyMessage;
+})();
+
+/* ============================================================
+   ADMISSION TAB — reuses the designed A4 admission PDF template
+   ============================================================ */
+(function(){
+  function admVal(id, fallback){
+    var el = document.getElementById(id);
+    var v = el ? el.value : "";
+    return v && v.trim() !== "" ? v : (fallback || "\u00A0");
+  }
+  function admFormatDate(dstr){
+    if (!dstr) return "\u00A0";
+    var parts = dstr.split("-");
+    if (parts.length !== 3) return dstr;
+    return parts[2] + "-" + parts[1] + "-" + parts[0];
+  }
+  function fillTemplate(){
+    document.getElementById("admpdf-out-date").textContent = admFormatDate(document.getElementById("ad-date").value);
+    document.getElementById("admpdf-out-name").textContent = admVal("ad-name");
+    document.getElementById("admpdf-out-dob").textContent = admFormatDate(document.getElementById("ad-dob").value);
+    document.getElementById("admpdf-out-gender").textContent = admVal("ad-gender");
+    document.getElementById("admpdf-out-address").textContent = admVal("ad-address");
+    document.getElementById("admpdf-out-father").textContent = admVal("ad-father");
+    document.getElementById("admpdf-out-contact").textContent = admVal("ad-contact");
+    document.getElementById("admpdf-out-school1").textContent = admVal("ad-school1");
+    document.getElementById("admpdf-out-class1").textContent = admVal("ad-class1");
+    document.getElementById("admpdf-out-year1").textContent = admVal("ad-year1");
+  }
+
+  // NOTE: We deliberately do NOT use window.print()/@media print for the
+  // admission PDF anymore. On many mobile Chrome / WebView setups the
+  // print pipeline snapshots a blank page for this A4 template no matter
+  // how the timing is tuned. Instead we rasterize the template directly
+  // with html2canvas and build a PDF with jsPDF, then trigger a normal
+  // file download — this sidesteps the browser print pipeline entirely.
+  window.generateAdmissionPdf = function(){
+    try{ fillTemplate(); }catch(e){ /* keep going even if a field lookup fails */ }
+
+    if (typeof html2canvas === "undefined" || !window.jspdf) {
+      alert("PDF library load nahi ho saki. Internet connection check karein aur dobara koshish karein.");
+      return;
+    }
+
+    var tpl = document.getElementById("admpdf-page");
+    var wrapper = document.getElementById("admpdf-template");
+
+    // Temporarily reveal the (normally print-only, display:none) template
+    // off-screen so html2canvas can measure & rasterize it.
+    var prevCssText = wrapper.style.cssText;
+    wrapper.style.cssText = "display:block !important; position:fixed; top:0; left:-10000px; z-index:-1;";
+
+    var btn = document.querySelector('[onclick="generateAdmissionPdf()"]');
+    var prevBtnText = btn ? btn.textContent : null;
+    if (btn) { btn.textContent = "⏳ Generating..."; btn.disabled = true; }
+
+    function restore(){
+      wrapper.style.cssText = prevCssText;
+      if (btn) { btn.textContent = prevBtnText; btn.disabled = false; }
+    }
+
+    // Two animation frames ensure the browser has actually laid out and
+    // painted the revealed template before we capture it.
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        html2canvas(tpl, { scale: 2, useCORS: true, backgroundColor: "#ffffff" }).then(function(canvas){
+          var imgData = canvas.toDataURL("image/jpeg", 0.95);
+          var pdf = new window.jspdf.jsPDF("p", "mm", "a4");
+          var pageWidth = 210, pageHeight = 297;
+          var imgWidth = pageWidth;
+          var imgHeight = canvas.height * imgWidth / canvas.width;
+          if (imgHeight > pageHeight) {
+            imgHeight = pageHeight;
+            imgWidth = canvas.width * imgHeight / canvas.height;
+          }
+          var x = (pageWidth - imgWidth) / 2;
+          var y = 0;
+          pdf.addImage(imgData, "JPEG", x, y, imgWidth, imgHeight);
+          var studentName = (document.getElementById("ad-name").value || "Admission-Form").trim().replace(/\s+/g, "_") || "Admission-Form";
+          pdf.save(studentName + "-Admission-Form.pdf");
+        }).catch(function(err){
+          alert("PDF generate karte waqt masla aaya. Dobara koshish karein.");
+        }).finally(function(){
+          restore();
+        });
+      });
+    });
+  };
 })();
 
 if ("serviceWorker" in navigator) {
