@@ -10,12 +10,12 @@
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
 <link rel="shortcut icon" href="./favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png">
-<title>PPS SCHOOL TOOLS</title>
+<title>PPS TOOLS</title>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Inter:wght@500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Inter:wght@500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=PT+Serif:wght@400;700&display=swap');
 
 :root{
   --bg1:#076653;
@@ -603,10 +603,10 @@ input[readonly]{color:var(--ink-soft)}
 #admpdf-template{display:none}
 #admpdf-page{
   width:210mm; min-height:297mm; background:#ffffff;
-  font-family:'Georgia','Times New Roman',serif; color:#2b2b2b; position:relative;
+  font-family:'PT Serif','Georgia','Times New Roman',serif; color:#2b2b2b; position:relative;
   letter-spacing:normal !important; word-spacing:normal !important; text-align:left;
 }
-#admpdf-page *{letter-spacing:normal !important; word-spacing:0.03em !important}
+#admpdf-page *{letter-spacing:normal !important; word-spacing:normal !important}
 #admpdf-page .admpdf-border-frame{
   position:absolute; top:8mm; left:8mm; right:8mm; bottom:8mm;
   border:3px double #0b3d2e; pointer-events:none;
@@ -1969,29 +1969,39 @@ ${rows.map(([l,n])=>l+": "+fmt(n)+" روپے").join("\n")}
       if (btn) { btn.textContent = prevBtnText; btn.disabled = false; }
     }
 
-    // Two animation frames ensure the browser has actually laid out and
-    // painted the revealed template before we capture it.
-    requestAnimationFrame(function(){
+    // Wait for webfonts (PT Serif, Noto Nastaliq Urdu, etc.) to be fully
+    // loaded before capturing. If html2canvas rasterizes text before a
+    // webfont has finished loading, the browser silently falls back to a
+    // substitute system font that html2canvas measures differently than
+    // it actually renders — that mismatch is what was causing uneven
+    // word spacing. document.fonts.ready guarantees fonts are ready.
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+
+    fontsReady.then(function(){
+      // Two animation frames ensure the browser has actually laid out and
+      // painted the revealed template before we capture it.
       requestAnimationFrame(function(){
-        html2canvas(tpl, { scale: 2, useCORS: true, backgroundColor: "#ffffff", letterRendering: false }).then(function(canvas){
-          var imgData = canvas.toDataURL("image/jpeg", 0.95);
-          var pdf = new window.jspdf.jsPDF("p", "mm", "a4");
-          var pageWidth = 210, pageHeight = 297;
-          var imgWidth = pageWidth;
-          var imgHeight = canvas.height * imgWidth / canvas.width;
-          if (imgHeight > pageHeight) {
-            imgHeight = pageHeight;
-            imgWidth = canvas.width * imgHeight / canvas.height;
-          }
-          var x = (pageWidth - imgWidth) / 2;
-          var y = 0;
-          pdf.addImage(imgData, "JPEG", x, y, imgWidth, imgHeight);
-          var studentName = (document.getElementById("ad-name").value || "Admission-Form").trim().replace(/\s+/g, "_") || "Admission-Form";
-          pdf.save(studentName + "-Admission-Form.pdf");
-        }).catch(function(err){
-          alert("PDF generate karte waqt masla aaya. Dobara koshish karein.");
-        }).finally(function(){
-          restore();
+        requestAnimationFrame(function(){
+          html2canvas(tpl, { scale: 2, useCORS: true, backgroundColor: "#ffffff", letterRendering: false }).then(function(canvas){
+            var imgData = canvas.toDataURL("image/jpeg", 0.95);
+            var pdf = new window.jspdf.jsPDF("p", "mm", "a4");
+            var pageWidth = 210, pageHeight = 297;
+            var imgWidth = pageWidth;
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+            if (imgHeight > pageHeight) {
+              imgHeight = pageHeight;
+              imgWidth = canvas.width * imgHeight / canvas.height;
+            }
+            var x = (pageWidth - imgWidth) / 2;
+            var y = 0;
+            pdf.addImage(imgData, "JPEG", x, y, imgWidth, imgHeight);
+            var studentName = (document.getElementById("ad-name").value || "Admission-Form").trim().replace(/\s+/g, "_") || "Admission-Form";
+            pdf.save(studentName + "-Admission-Form.pdf");
+          }).catch(function(err){
+            alert("PDF generate karte waqt masla aaya. Dobara koshish karein.");
+          }).finally(function(){
+            restore();
+          });
         });
       });
     });
