@@ -665,6 +665,9 @@ input[readonly]{color:var(--ink-soft)}
   font-family:'Jameel Noori Nastaleeq','Noto Nastaliq Urdu',serif;
   font-size:15px; line-height:2.3; color:#222;
 }
+#admpdf-page .admpdf-rules-text, #admpdf-page .admpdf-rules-text *{
+  word-spacing:normal !important; letter-spacing:normal !important;
+}
 #admpdf-page .admpdf-rules-text p{margin:0 0 12px 0}
 #admpdf-page .admpdf-rules-text p b{color:#062e1a}
 #admpdf-page .admpdf-signatures{display:flex; justify-content:space-between; margin-top:36px; font-size:13.5px}
@@ -1970,7 +1973,7 @@ ${rows.map(([l,n])=>l+": "+fmt(n)+" روپے").join("\n")}
     // painted the revealed template before we capture it.
     requestAnimationFrame(function(){
       requestAnimationFrame(function(){
-        html2canvas(tpl, { scale: 2, useCORS: true, backgroundColor: "#ffffff", letterRendering: true }).then(function(canvas){
+        html2canvas(tpl, { scale: 2, useCORS: true, backgroundColor: "#ffffff", letterRendering: false }).then(function(canvas){
           var imgData = canvas.toDataURL("image/jpeg", 0.95);
           var pdf = new window.jspdf.jsPDF("p", "mm", "a4");
           var pageWidth = 210, pageHeight = 297;
