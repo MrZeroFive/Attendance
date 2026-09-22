@@ -1613,7 +1613,6 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
             <option value="" selected disabled>Select subject</option>
             <option>English</option>
             <option>Urdu</option>
-            <option>Mutalia Quran</option>
             <option>Mathematics</option>
             <option>Science</option>
             <option>Islamiyat</option>
@@ -1623,9 +1622,7 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
             <option>Physics</option>
             <option>Chemistry</option>
             <option>Biology</option>
-            <option>Nazira Quran</option>
-            <option>General Knowledge</option>
-            <option>Grammar</option>
+            <option>Drawing</option>
             <option value="__other">Other…</option>
           </select>
         </div>
@@ -2541,7 +2538,7 @@ ${B("پنجکوڑہ پبلک ہائی سکول")}`;
     }
     return `السلام علیکم!
 
-امید ہے کہ آپ خیریت و عافیت سے ہوں گے۔ اللّٰہ تعالیٰ آپ کو اور آپ کے اہلِ خانہ کو ہمیشہ خوش و سلامت رکھے۔
+امید ہے کہ آپ خیریت و عافیت سے ہوں گے۔ اللہ تعالیٰ آپ کو اور آپ کے اہلِ خانہ کو ہمیشہ خوش و سلامت رکھے۔
 
 آپ کو مؤدبانہ اطلاع دی جاتی ہے کہ آپ کے بچے ${student}، جماعت ${cls} کی فیس کے سلسلے میں درج ذیل رقم واجب الادا ہے:
 
@@ -2846,9 +2843,9 @@ showHome();
       var book = row.querySelector(".book").checked, notebook = row.querySelector(".notebook").checked,
           both = row.querySelector(".both").checked, homework = row.querySelector(".homework").checked;
       var issues = [];
-      if(both) issues.push("کتاب اور نوٹ بک نہیں ہیں");
-      else { if(book) issues.push("کتاب نہیں ہے"); if(notebook) issues.push("نوٹ بُک نہیں ہے"); }
-      if(homework) issues.push("ہوم ورک نہیں کیا ہے");
+      if(both) issues.push("Book & Notebook nahi hain");
+      else { if(book) issues.push("Book nahi hai"); if(notebook) issues.push("Notebook nahi hai"); }
+      if(homework) issues.push("Homework nahi kiya");
       if(issues.length > 0) report += valid + ". *" + name + "* — " + issues.join(", ") + "\n";
     });
 
@@ -2861,7 +2858,7 @@ showHome();
 
   /* floating school doodles (only visible on the Homework page) */
   (function(){
-    var icons = ["✏️","📚","⭐","📓","🎒","🖍️","📐","🔔","❤️","💕","🏵️"], box = $("hw-doodles");
+    var icons = ["✏️","📚","⭐","📓","🎒","🖍️","📐","🔔"], box = $("hw-doodles");
     for(var i = 0; i < 14; i++){
       var d = document.createElement("span");
       d.className = "hw-doodle";
