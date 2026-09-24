@@ -1,6 +1,6 @@
 // Minimal service worker — enables "Install app" in Chrome and other browsers.
 // It caches the app shell so the tools keep working offline after the first visit.
-const CACHE_NAME = "pps-school-tools-v2";
+const CACHE_NAME = "pphs-v2";
 const CORE_ASSETS = [
   "./",
   "./index.html",
