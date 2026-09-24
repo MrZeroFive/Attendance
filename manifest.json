@@ -1,13 +1,13 @@
 {
-  "name": "PPS School Tools",
-  "short_name": "PPS Tools",
+  "name": "PPHS",
+  "short_name": "PPHS",
   "description": "Punjkora Public High School — attendance, fee receipts and fee reminder tools.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#3e4093",
+  "theme_color": "#3e4093",
   "icons": [
     { "src": "icons/icon-16.png",  "sizes": "16x16",  "type": "image/png" },
     { "src": "icons/icon-32.png",  "sizes": "32x32",  "type": "image/png" },
