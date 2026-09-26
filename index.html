@@ -2272,7 +2272,7 @@ function attUnlockLate(){
     if(input) input.value = "";
     checkAttendanceLock();
   } else {
-    if(error) error.textContent = "غلط پاس ورڈ۔ دوبارہ کوشش کریں۔";
+    if(error) error.textContent = " ھا ھا ھا، غلط پاس ورڈ۔ دوبارہ کوشش کریں۔";
   }
 }
 (function(){
@@ -2341,7 +2341,7 @@ function submitLoginPass(){
     closeLoginModal();
     if(goTo){ proceedToTab(goTo); }
   } else {
-    document.getElementById("loginError").textContent = "غلط پاس ورڈ! دوبارہ کوشش کریں۔";
+    document.getElementById("loginError").textContent = " ھا ھا ھا،غلط پاس ورڈ! دوبارہ کوشش کریں۔";
   }
 }
 document.getElementById("loginPassInput").addEventListener("keydown", function(e){
@@ -2458,7 +2458,7 @@ buildGlitchTitle("marksTitle","MARKS SHEET");
     if(absent.length){
       absent.forEach((student,i)=>{ msg+=`${i+1}. ${student}\n`; });
     }else{
-      msg+="Alhamdull, All Present.\n";
+      msg+="*Alhamdullih*, All Present ❤️\n";
     }
 
     msg+=`\n*STUDENTS ON LEAVE*\n`;
