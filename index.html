@@ -3127,7 +3127,7 @@ showHome();
   function refreshTally(){
     var rows = list.querySelectorAll(".hw-row"), flagged = 0;
     rows.forEach(function(r){ if(issueCount(r) > 0) flagged++; });
-    $("hw-tallyMain").textContent = Reported + (Reported === 1 ? " student flagged" : " students Reported");
+    $("hw-tallyMain").textContent = flagged + (flagged === 1 ? " student flagged" : " students flagged");
     $("hw-tallySub").textContent = rows.length + (rows.length === 1 ? " student added" : " students added");
   }
   function updateNumbers(){
@@ -3980,12 +3980,12 @@ showHome();
     /* students, test, class, subject, marks: always start a fresh entry on reload */
     try{
       var sc = localStorage.getItem(KEY_SCHOOL);
-      if(sc === null){                                   // pick up the name saved by the older version
+      if(!sc){                                            // pick up the name saved by the older version
         var old = localStorage.getItem("studentMarksSheet.v3");
         sc = old ? (JSON.parse(old).school || "") : "";
-        if(!sc) sc = "Punjkora Public High School";       // default school name on first use
       }
-      state.school = sc || "";
+      if(!sc) sc = "Punjkora Public High School";         // always default to this school name
+      state.school = sc;
     }catch(e){}
   }
   function save(){
