@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="0a3547">
+<meta name="theme-color" content="#f3f4f6">
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="./icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="./icons/icon-16.png">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
 <link rel="shortcut icon" href="./favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png">
-<title>PPHS</title>
+<title>PPS TOOLS</title>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=PT+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=PT+Serif:wght@400;700&family=Outfit:wght@400;500;600;700&display=swap');
 
 :root{
   --bg1:#f8f9fa; --bg2:#eceff2; --bg3:#e3e7eb;
@@ -42,6 +42,8 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%}
+html{-webkit-text-size-adjust:100%; text-size-adjust:100%}
+body{overflow-x:hidden}
 body{
   margin:0; font-family:'Inter',Arial,sans-serif; min-height:100vh;
   background:
@@ -75,7 +77,7 @@ body{
 .head-row{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:18px}
 h1,.panel-title{
   margin:0; font-family:'Inter',Arial,sans-serif; font-weight:700;
-  font-size:27px; color:var(--ink); letter-spacing:.3px;
+  font-size:clamp(21px,6vw,27px); color:var(--ink); letter-spacing:.3px;
 }
 .glitch-letter{display:inline-block;animation:glitchLoop 1.8s linear infinite;animation-delay:calc(var(--i) * .04s)}
 @keyframes glitchLoop{
@@ -88,9 +90,9 @@ h1,.panel-title{
   92%{transform:translate(0,0); text-shadow:none}
 }
 .subtitle{
-  margin:0; font-size:11.5px; color:#fff; font-weight:700; letter-spacing:.4px;
+  margin:0; font-size:clamp(9.5px,2.6vw,11.5px); color:#fff; font-weight:700; letter-spacing:.4px;
   background:linear-gradient(135deg, var(--accent1), var(--accent2));
-  padding:9px 16px; border-radius:999px; white-space:nowrap;
+  padding:9px clamp(10px,3vw,16px); border-radius:999px; white-space:nowrap;
   box-shadow:0 8px 16px rgba(12,52,44,.4), inset 0 1px 0 rgba(255,255,255,.4);
 }
 .panel-desc{margin:0 0 6px; font-size:13px; color:var(--ink-soft); font-weight:600; line-height:1.5}
@@ -438,6 +440,15 @@ input[readonly]{color:var(--ink-soft)}
   .grid2{grid-template-columns:1fr}
   .actions-row{grid-template-columns:1fr}
 }
+@media(max-width:360px){
+  body{padding:22px 10px 36px}
+  .card{padding:18px 12px 16px; border-radius:24px}
+  .tiles{grid-template-columns:1fr; gap:10px}
+  .tile{min-height:auto; flex-direction:row; align-items:center; padding:14px}
+  .tile .tile-txt{margin-top:0}
+  .tile-txt b{white-space:normal}
+  .tile-chev{position:static; margin-left:auto}
+}
 
 /* ---------- Welcome screen ---------- */
 #welcome{
@@ -595,6 +606,7 @@ input[readonly]{color:var(--ink-soft)}
 
 /* ---------- Admission tab specifics ---------- */
 .adm-row3{display:grid; grid-template-columns:2fr 1fr 1fr; gap:8px}
+@media(max-width:430px){ .adm-row3{grid-template-columns:1fr} }
 .adm-row3 .lbl-sm{font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.3px; font-weight:700; margin:0 0 6px; opacity:.75}
 
 /* Hidden designed admission PDF template (screen-only hidden, shown on print) */
@@ -707,6 +719,9 @@ body::before{
   background-size:14px 14px; opacity:.7; pointer-events:none; z-index:0;
 }
 .container{max-width:560px}
+@media (min-width:700px){ .container{max-width:640px} }
+@media (min-width:1000px){ .container{max-width:720px} }
+@media (min-width:700px){ body{padding-top:40px} }
 #appRoot{opacity:1}
 
 /* profile header */
@@ -743,8 +758,8 @@ body::before{
 }
 .tile-txt{display:flex; flex-direction:column; gap:2px; margin-top:auto}
 .tile.wide .tile-txt{margin-top:0}
-.tile-txt b{font-size:15.5px; font-weight:800; letter-spacing:-.1px}
-.tile-txt small{font-size:12.5px; font-weight:600; opacity:.85}
+.tile-txt b{font-size:clamp(13.5px,3.8vw,15.5px); font-weight:800; letter-spacing:-.1px}
+.tile-txt small{font-size:clamp(11px,3vw,12.5px); font-weight:600; opacity:.85}
 .tile-chev{position:absolute; top:16px; right:16px; font-size:24px; line-height:1; font-weight:600; opacity:.9}
 .tile.wide .tile-chev{position:static; margin-left:auto}
 .tile-orange{background:var(--orange)}
@@ -753,6 +768,7 @@ body::before{
 .tile-light{background:#fff; color:var(--ink); box-shadow:0 10px 24px rgba(16,40,60,.10)}
 .tile-light .tile-ico{background:#f3f4f6; box-shadow:none}
 .tile-light .tile-chev{color:var(--ink-soft)}
+.tile-marks{background:var(--orange)}
 .tile.active{box-shadow:0 0 0 3px #fff, 0 0 0 6px rgba(255,138,42,.6), var(--tile-shadow)}
 .tile.active .tile-chev{transform:rotate(90deg)}
 
@@ -1100,6 +1116,8 @@ body.view-hw .hw-bg{display:block}
 .hw-dot{width:9px; height:9px; border-radius:50%; background:#ffb020; box-shadow:0 0 0 4px #fff3d6}
 
 .hw-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:11px}
+@media(max-width:480px){ .hw-grid{grid-template-columns:1fr} }
+@media(min-width:900px){ .hw-grid{grid-template-columns:repeat(4,1fr)} }
 .hw-grid .hw-full{grid-column:1 / -1}
 #tab-homework label.hw-lab{display:block; margin:0 0 6px 3px; font-size:12px; font-weight:700; color:#5f7a80; text-transform:none; letter-spacing:0; opacity:1}
 
@@ -1229,6 +1247,260 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
 .tile-txt b{font-weight:700; font-size:15.5px; line-height:1.15; letter-spacing:0; white-space:nowrap}
 .section-title{font-weight:700; letter-spacing:.5px}
 .splash-title{font-weight:800; letter-spacing:0}
+
+/* =====================================================================
+   MARKS SHEET — merged inline from marks-sheet.html, scoped to
+   #tab-marks (screen) and #printArea (PDF output) so nothing else
+   in the app changes
+   ===================================================================== */
+#tab-marks, #printArea{
+  --orange:#ff8a2a; --orange-2:#f26a1b; --teal:#1f7189; --teal-2:#0f4c62; --deep:#0a3345;
+  --ink:#13202b; --muted:#6a7480; --page:#eceef1; --line:#e6e9ee;
+  --ok:#138a3d; --bad:#c62828;
+  --navy:#0b2e6b; --green:#138a3d; --red:#c62828; --lblue:#bfdcff;
+  --shadow:0 8px 22px rgba(19,32,43,.08);
+  --roll-w:40px;
+}
+
+#tab-marks{
+  color:var(--ink); overflow-x:hidden;
+  font-family:"Outfit","Segoe UI",system-ui,-apple-system,"Noto Nastaliq Urdu","Noto Sans Arabic",Tahoma,sans-serif;
+  line-height:1.5;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+
+/* ---------- Top: title box ---------- */
+#tab-marks .hero{position:relative; max-width:940px; margin:14px auto 6px; width:calc(100% - 28px);
+  display:grid; place-items:center; text-align:center; overflow:hidden; min-height:150px;
+  padding:18px; border-radius:26px; box-shadow:var(--shadow);
+  background:#eef2f5}
+
+#tab-marks .hero h1{position:relative; z-index:5; margin:0; font-size:1.6rem; font-weight:700; color:#12202b}
+
+#tab-marks .body{max-width:940px; margin:0 auto; padding:8px 0 24px}
+
+/* ---------- Cards ---------- */
+#tab-marks .card{background:#fff; border-radius:22px; padding:16px 10px; margin-bottom:16px; box-shadow:var(--shadow)}
+body.view-marks{padding-left:6px; padding-right:6px}
+@media(max-width:430px){ body.view-marks{padding-left:4px; padding-right:4px} }
+#tab-marks .card h2{margin:0 0 10px; font-size:1.05rem; font-weight:600; display:flex; align-items:center; gap:10px}
+#tab-marks .step{display:inline-flex; align-items:center; justify-content:center; padding:8px 20px; border-radius:999px;
+      background:linear-gradient(135deg,var(--orange),var(--orange-2)); color:#fff; font-size:.95rem; font-weight:600;
+      box-shadow:0 6px 14px rgba(242,106,27,.28)}
+
+#tab-marks .grid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+#tab-marks .ms-row{display:block}
+@media (min-width:900px){
+  #tab-marks .ms-row{display:grid; grid-template-columns:1fr 1.3fr; gap:16px; align-items:start}
+  #tab-marks .ms-row #step2Card{order:1; margin-bottom:0}
+  #tab-marks .ms-row #listSection{order:2; margin-bottom:0}
+}
+
+/* ---------- Desktop, class selected: student list detaches into its own
+   floating panel docked to the right edge of the screen (position:fixed,
+   so it can't stretch/inflate the grid rows of the left-side cards — that
+   was the earlier "big gap" bug). Everything else (title, test details,
+   add-students, tiles) just stays in its normal place on the left; we only
+   reserve room on the right via body padding so nothing sits under the
+   panel. Mobile is untouched — gated to >=900px and body.marks-cls-active,
+   which JS toggles only while a class is chosen. ---------- */
+@media (min-width:900px){
+  body.marks-cls-active{
+    --ms-panel-w: min(58vw, 860px);
+    padding-right: calc(var(--ms-panel-w) + 30px);
+  }
+  body.marks-cls-active .container{ max-width:360px }
+  body.marks-cls-active #tab-marks .ms-row{ grid-template-columns:1fr }
+  body.marks-cls-active #tab-marks #listSection{
+    position:fixed; top:64px; right:16px; bottom:16px;
+    width:var(--ms-panel-w); margin:0; z-index:6;
+    display:flex; flex-direction:column;
+    box-shadow:0 26px 54px rgba(16,40,60,.20), 0 2px 8px rgba(16,40,60,.06);
+  }
+  body.marks-cls-active #tab-marks #listSection .table-wrap{ flex:1; overflow:auto }
+}
+#tab-marks .wide{grid-column:1/-1}
+#tab-marks .grid.two{grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 10px}
+#tab-marks .grid.two label{font-size:.74rem; margin:0 0 2px 4px}
+#tab-marks .grid.two input,#tab-marks .grid.two select{padding:9px 10px; font-size:.9rem; border-radius:14px; text-overflow:ellipsis}
+#tab-marks .grid.two select{padding-right:4px}
+#tab-marks #subOtherBox{margin-top:6px}
+#tab-marks .row2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
+#tab-marks .mt12{margin-top:12px}
+#tab-marks label{display:block; font-size:.8rem; color:var(--muted); margin:0 0 4px 6px; text-transform:none; letter-spacing:normal; opacity:1; font-weight:400}
+#tab-marks input,#tab-marks select{
+  width:100%; padding:12px 14px; font-size:1rem; font-family:inherit;
+  color:var(--ink); background:#f4f5f7; border:1px solid var(--line); border-radius:16px;
+  box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; font-weight:500;
+}
+#tab-marks input::placeholder{color:#9aa3ad; font-weight:400}
+#tab-marks input:focus,#tab-marks select:focus{outline:none; border-color:var(--orange); box-shadow:0 0 0 3px rgba(255,138,42,.25); background:#f4f5f7}
+#tab-marks input.bad{border-color:var(--bad); box-shadow:0 0 0 3px rgba(198,40,40,.18)}
+#tab-marks button:focus-visible{outline:3px solid var(--orange); outline-offset:2px}
+#tab-marks .hidden{display:none !important}
+#tab-marks .hint{font-size:.85rem; color:#5b6b76; margin:6px 0 4px}
+
+#tab-marks button{font-family:inherit; font-size:.95rem; font-weight:600; cursor:pointer; border:1px solid transparent; border-radius:999px; padding:11px 20px}
+#tab-marks .btn-sun{background:linear-gradient(135deg,var(--orange),var(--orange-2)); color:#fff; box-shadow:0 6px 14px rgba(242,106,27,.28)}
+#tab-marks .btn-sun:hover{filter:brightness(1.05)}
+#tab-marks .btn-green{background:linear-gradient(135deg,#2bc16a,#138a3d); color:#fff; box-shadow:0 6px 14px rgba(19,138,61,.28)}
+#tab-marks .btn-green:hover{filter:brightness(1.05)}
+#tab-marks .btn-red{background:linear-gradient(135deg,#ef4b4b,#c62828); color:#fff; box-shadow:0 6px 14px rgba(198,40,40,.28)}
+#tab-marks .btn-red:hover{filter:brightness(1.05)}
+#tab-marks .btn-wide{width:100%; padding:13px 20px; font-size:1rem}
+#tab-marks .btn-glass{background:#fff; color:var(--ink); border-color:var(--line); box-shadow:0 2px 8px rgba(19,32,43,.06)}
+#tab-marks .btn-glass:hover{background:#f4f5f7}
+#tab-marks .btn-del{background:#fdecea; color:var(--bad); border-color:#f6c8c3}
+#tab-marks .btn-del:hover{background:#fadbd7}
+#tab-marks .btn-small{padding:6px 12px; font-size:.82rem}
+#tab-marks .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+#tab-marks .actions3{display:flex; gap:6px; margin-top:10px}
+#tab-marks .actions3 button{flex:1 1 auto; padding:11px 6px; font-size:.8rem; white-space:nowrap}
+@media (max-width:340px){ #tab-marks .actions3{gap:4px} #tab-marks .actions3 button{padding:10px 3px; font-size:.72rem} }
+
+/* Status picker: Present / Absent / Leave */
+#tab-marks .lbl{font-size:.8rem; color:var(--muted); margin:0 0 4px 6px; text-transform:none; letter-spacing:normal; opacity:1; font-weight:400}
+#tab-marks .seg{display:flex; gap:8px}
+#tab-marks .seg .seg-opt{position:relative; flex:1; margin:0; font-size:inherit; color:inherit; cursor:pointer}
+#tab-marks .seg input{position:absolute; opacity:0; width:0; height:0; padding:0; border:0; pointer-events:none}
+#tab-marks .seg span{display:block; text-align:center; padding:10px 6px; border-radius:999px; background:#f4f5f7; border:1px solid var(--line);
+          color:var(--ink); font-weight:600; font-size:.92rem}
+#tab-marks .seg input:checked + span{color:#fff; border-color:transparent; background:linear-gradient(135deg,var(--teal),var(--teal-2))}
+#tab-marks .seg .absent input:checked + span{background:linear-gradient(135deg,var(--orange),var(--orange-2))}
+#tab-marks .seg .leave input:checked + span{background:#ffd21f; color:#5c4600}
+#tab-marks .seg input:focus-visible + span{outline:3px solid var(--orange); outline-offset:2px}
+#tab-marks input:disabled{opacity:.6}
+
+/* Status badges on screen */
+#tab-marks .sbadge{display:inline-block; padding:3px 12px; border-radius:999px; font-size:.82rem; font-weight:700}
+#tab-marks .sbadge.absent{background:#ffb066; color:#7a3300}
+#tab-marks .sbadge.leave{background:#ffe066; color:#6b5300}
+#tab-marks .dash{color:var(--muted)}
+
+/* Error / info message */
+#tab-marks .msg{margin-top:12px; font-size:.95rem; font-weight:600; border-radius:14px; padding:0}
+#tab-marks .msg.err{background:#fdecea; border:1px solid #f3b3ab; color:#b3261e; padding:10px 14px}
+
+/* ---------- Stat tiles ---------- */
+#tab-marks .tiles{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); margin-bottom:16px}
+#tab-marks .tile{background:#fff; box-shadow:var(--shadow); border-radius:24px; padding:14px 16px}
+#tab-marks .tile b{display:block; font-size:1.7rem; font-weight:600; line-height:1.15}
+#tab-marks .tile small{color:var(--muted); font-size:.8rem}
+#tab-marks .tile.sun,#tab-marks .tile.teal,#tab-marks .tile.navy{color:#fff}
+#tab-marks .tile.sun small,#tab-marks .tile.teal small,#tab-marks .tile.navy small{color:rgba(255,255,255,.85)}
+#tab-marks .tile.sun{background:linear-gradient(135deg,var(--orange),var(--orange-2))}
+#tab-marks .tile.teal{background:linear-gradient(145deg,var(--teal),var(--teal-2))}
+#tab-marks .tile.navy{background:linear-gradient(145deg,var(--teal-2),var(--deep))}
+
+/* ---------- Heading preview (same colours as the PDF) ---------- */
+#tab-marks .preview{background:#f7f8fa; border:1px solid var(--line); border-radius:18px; padding:12px 16px; text-align:center; margin-bottom:14px}
+#tab-marks .preview .p1{color:var(--navy); font-size:1.25rem; font-weight:700; text-transform:uppercase}
+#tab-marks .preview .p2{color:var(--green); font-size:1rem; font-weight:600}
+#tab-marks .preview .p3{color:#000; font-size:.85rem; font-weight:700}
+#tab-marks .preview .ph{opacity:.4}
+
+/* ---------- Screen table ---------- */
+#tab-marks .table-wrap{overflow-x:auto}
+#tab-marks table.screen{width:100%; border-collapse:collapse; min-width:560px; font-size:.82rem; table-layout:fixed}
+#tab-marks table.screen th,#tab-marks table.screen td{padding:5px 4px; text-align:left; border-bottom:1px solid var(--line)}
+#tab-marks table.screen thead th{background:var(--lblue); color:var(--navy); font-size:.72rem; font-weight:700; border-bottom:0}
+#tab-marks table.screen thead th:first-child{border-radius:14px 0 0 14px}
+#tab-marks table.screen thead th:last-child{border-radius:0 14px 14px 0}
+#tab-marks table.screen input,#tab-marks table.screen select{padding:6px 6px; font-size:.85rem; border-radius:10px}
+#tab-marks table.screen col.col-roll{width:var(--roll-w)}
+#tab-marks table.screen .roll-input{width:42px}
+#tab-marks table.screen .marks-input{width:58px}
+
+/* Sticky Roll no. + Name columns: stay visible while scrolling right on mobile */
+#tab-marks table.screen th:nth-child(1),#tab-marks table.screen td:nth-child(1){position:sticky; left:0; z-index:2}
+#tab-marks table.screen th:nth-child(2),#tab-marks table.screen td:nth-child(2){position:sticky; left:var(--roll-w); z-index:2}
+#tab-marks table.screen thead th:nth-child(1),#tab-marks table.screen thead th:nth-child(2){z-index:3; background:var(--lblue)}
+#tab-marks table.screen tbody td:nth-child(1),#tab-marks table.screen tbody td:nth-child(2){background:#fff}
+#tab-marks table.screen tbody tr.row-done td:nth-child(1),#tab-marks table.screen tbody tr.row-done td:nth-child(2){background:#e4f7ea}
+#tab-marks table.screen td:nth-child(2){box-shadow:4px 0 6px -4px rgba(19,32,43,.25)}
+#tab-marks table.screen tr.addrow td{position:static; background:#fff; box-shadow:none}
+
+/* Desktop / larger screens: roomier table, no cramped compact sizing needed */
+@media (min-width:701px){
+  #tab-marks{--roll-w:64px}
+  #tab-marks .body{max-width:1180px}
+  #tab-marks .hero{max-width:1180px}
+  #tab-marks table.screen{min-width:0; font-size:1rem}
+  #tab-marks table.screen th,#tab-marks table.screen td{padding:12px 10px}
+  #tab-marks table.screen thead th{font-size:.85rem}
+  #tab-marks table.screen input,#tab-marks table.screen select{padding:10px 12px; font-size:1rem; border-radius:12px}
+  #tab-marks table.screen .roll-input{width:68px}
+  #tab-marks table.screen .marks-input{width:88px}
+  #tab-marks table.screen td:nth-child(2){box-shadow:none}
+}
+
+/* Active row: Roll no. + Name input boxes blink yellow while any field in that row has focus */
+@keyframes msBoxBlink{0%,100%{background:#fff6b0} 50%{background:#fffbe0}}
+#tab-marks table.screen tbody tr:focus-within > td:nth-child(1) input,
+#tab-marks table.screen tbody tr:focus-within > td:nth-child(2) input{animation:msBoxBlink 1.5s ease-in-out infinite}
+#tab-marks td.num,#tab-marks th.num{text-align:right; font-variant-numeric:tabular-nums}
+#tab-marks td.name{unicode-bidi:plaintext}
+#tab-marks .roll{font-weight:700; color:#c25a0a}
+#tab-marks .grade{font-weight:700}
+#tab-marks .pass{color:var(--ok); font-weight:700} #tab-marks .fail{color:var(--bad); font-weight:700}
+#tab-marks tr.missing td{color:var(--muted)}
+#tab-marks tr.missing .na{font-style:italic; color:#9a6b00}
+#tab-marks tr.row-done > td{background:#e4f7ea}
+#tab-marks .empty{text-align:center; color:var(--muted); padding:26px 8px}
+#tab-marks .actions{display:flex; gap:6px; justify-content:flex-end; flex-wrap:wrap}
+
+/* ---------- PDF pages (hidden on screen) ---------- */
+#printArea{display:none}
+
+/* Named print page: only the Marks Sheet PDF output uses A4 — every
+   other tab (Fee Receipt etc.) keeps the app's own page size below */
+#printArea{ page: msA4; }
+@page msA4{ size:A4; margin:10mm 9mm; }
+
+@media print{
+  body.printing-marks > *:not(#printArea){display:none !important}
+  body.printing-marks #printArea{display:block !important; background:#fff; font-family:"Outfit","Segoe UI",Arial,Helvetica,sans-serif}
+
+  /* Every #printArea .page = exactly one printed page (max 30 rows) */
+  #printArea .page{break-after:page; page-break-after:always}
+  #printArea .page:last-child{break-after:auto; page-break-after:auto}
+
+  #printArea .ph1{margin:0; text-align:center; font-size:22pt; font-weight:700; line-height:1.2; color:var(--navy); text-transform:uppercase}
+  #printArea .ph2{margin:1.5mm 0 0; text-align:center; font-size:15pt; font-weight:700; line-height:1.2; color:var(--green); text-transform:uppercase}
+  #printArea .ph3{margin:1.5mm 0 2.5mm; display:flex; justify-content:space-between; font-size:10pt; color:#000}
+  #printArea .ph3 span:first-child{font-weight:700}
+
+  /* PDF table = same design as the app table, on a white page */
+  #printArea table.pt{width:100%; table-layout:fixed; border-collapse:collapse; font-size:9.5pt}
+  #printArea table.pt th, #printArea table.pt td{
+    height:7.4mm; padding:0 2mm; line-height:1; border:0; border-bottom:.25mm solid #c3ccd9;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center;
+    color:#000; background:#fff; vertical-align:middle;
+  }
+  #printArea .tw{border:.4mm solid #8aa0c0; border-radius:3.5mm; overflow:hidden}
+  #printArea .hbar{background:#87ceeb !important; border-radius:3.5mm; margin-bottom:2.5mm; overflow:hidden}
+  #printArea table.pt thead th{background:transparent; color:var(--navy); font-size:11pt; font-weight:700; border-bottom:0}
+  #printArea table.pt tbody tr:last-child td{border-bottom:0}
+  #printArea table.pt .roll{font-weight:700; color:#9a6b00}
+  #printArea table.pt .mk{font-weight:700}
+  #printArea table.pt .nm{font-weight:700}
+  #printArea table.pt .grade{font-weight:700}
+  #printArea table.pt .badge{display:inline-block; padding:1.3mm 3mm; border-radius:999px; font-size:8.5pt; font-weight:700; line-height:1}
+  #printArea table.pt .badge.pass{background:#c8efd2 !important; color:var(--green)}
+  #printArea table.pt .badge.fail{background:#f7c5c5 !important; color:var(--red)}
+  #printArea table.pt .badge.leave{background:#ffe066 !important; color:#6b5300}
+  #printArea table.pt .badge.absent{background:#ffb066 !important; color:#7a3300}
+  #printArea table.pt tr.missing td{color:#6b7280}
+  #printArea table.pt tr.missing .na{font-style:italic; color:#9a6b00}
+}
+
+/* The marks screen keeps its own soft backdrop behind its cards */
+#tab-marks{
+  background:radial-gradient(circle at 100% 38%,rgba(242,106,27,.12),transparent 30%),
+             radial-gradient(circle at 0 92%,rgba(31,113,137,.14),transparent 36%), #eceef1;
+  border-radius:26px; padding:14px 10px 20px; margin:0 -6px;
+}
+
 </style>
 </head>
 <body class="view-home splash-on">
@@ -1279,28 +1551,31 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
 <div class="container">
 
   <header class="profile">
-    <div class="profile-name" aria-label="PPHS"><span class="ch" style="--i:0" aria-hidden="true">P</span><span class="ch" style="--i:1" aria-hidden="true">P</span><span class="ch" style="--i:2" aria-hidden="true">S</span><span class="ch gap" aria-hidden="true">&nbsp;</span><span class="ch" style="--i:4" aria-hidden="true">T</span><span class="ch" style="--i:5" aria-hidden="true">O</span><span class="ch" style="--i:6" aria-hidden="true">O</span><span class="ch" style="--i:7" aria-hidden="true">L</span><span class="ch" style="--i:8" aria-hidden="true">S</span>
+    <div class="profile-name" aria-label="PPS TOOLS"><span class="ch" style="--i:0" aria-hidden="true">P</span><span class="ch" style="--i:1" aria-hidden="true">P</span><span class="ch" style="--i:2" aria-hidden="true">S</span><span class="ch gap" aria-hidden="true">&nbsp;</span><span class="ch" style="--i:4" aria-hidden="true">T</span><span class="ch" style="--i:5" aria-hidden="true">O</span><span class="ch" style="--i:6" aria-hidden="true">O</span><span class="ch" style="--i:7" aria-hidden="true">L</span><span class="ch" style="--i:8" aria-hidden="true">S</span>
       <svg class="verified ch" style="--i:9" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#ff6a2a"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <span id="welcomeGreeting">Good Morning</span>
-    <p class="profile-tag">Welcome, Mentor!<br>Less Paper work, More Teaching.</p>
+    <p class="profile-tag">Welcome, Teacher.<br>Less Paper work, More Teaching.</p>
   </header>
 
   <nav class="tiles" aria-label="Sections">
     <button class="tile tile-orange wide" type="button" data-tab="attendance" onclick="tryTab('attendance')">
-      <span class="tile-ico">✅</span><span class="tile-txt"><b>Attendance</b><small>Aaj Ka Attendance Lagawo</small></span><span class="tile-chev">›</span>
+      <span class="tile-ico">📋</span><span class="tile-txt"><b>Attendance</b><small>Daily class attendance</small></span><span class="tile-chev">›</span>
     </button>
-    <button class="tile tile-teal" type="button" data-tab="receipt" onclick="tryTab('receipt')">
+    <button class="tile tile-deep" type="button" data-tab="receipt" onclick="tryTab('receipt')">
       <span class="tile-ico">🧾</span><span class="tile-txt"><b>Fee Receipt</b><small>Print &amp; send receipts</small></span><span class="tile-chev">›</span>
     </button>
     <button class="tile tile-deep" type="button" data-tab="reminder" onclick="tryTab('reminder')">
       <span class="tile-ico">🔔</span><span class="tile-txt"><b>Fee Reminder</b><small>Remind guardians</small></span><span class="tile-chev">›</span>
     </button>
-    <button class="tile tile-orange" type="button" data-tab="homework" onclick="tryTab('homework')">
+    <button class="tile tile-deep" type="button" data-tab="homework" onclick="tryTab('homework')">
       <span class="tile-ico">📚</span><span class="tile-txt"><b>Homework Check</b><small>Report to Principal</small></span><span class="tile-chev">›</span>
     </button>
-    <button class="tile tile-light" type="button" data-tab="admission" onclick="tryTab('admission')">
-      <span class="tile-ico">🎓</span><span class="tile-txt"><b>Admission</b><small>Future Star</small></span><span class="tile-chev">›</span>
+    <button class="tile tile-deep" type="button" data-tab="admission" onclick="tryTab('admission')">
+      <span class="tile-ico">🎓</span><span class="tile-txt"><b>Admission</b><small>Admission form PDF</small></span><span class="tile-chev">›</span>
+    </button>
+    <button class="tile tile-marks wide" type="button" data-tab="marks" onclick="tryTab('marks')">
+      <span class="tile-ico">📊</span><span class="tile-txt"><b>Marks Sheet</b><small>Student test results</small></span><span class="tile-chev">›</span>
     </button>
   </nav>
 
@@ -1324,7 +1599,7 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
             <div class="clock-center"></div>
           </div>
         </div>
-        <div class="att-lock-title">حاضری کا وقت ختم ہو گیا ہے۔</div>
+        <div class="att-lock-title">حاضری کا وقت ختم ہو گیا</div>
         <div class="att-lock-msg">حاضری صرف دوپہر 1 بجے سے پہلے لگائی جا سکتی ہے۔ اگر ابھی حاضری اپڈیٹ کرنا ضروری ہے تو پاس ورڈ درج کریں۔</div>
         <div class="att-unlock-row">
           <input type="password" id="att-latePassInput" placeholder="Password" autocomplete="off">
@@ -1334,30 +1609,32 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
       </div>
 
       <div id="att-fieldsWrap">
-      <label>Attendance Date</label>
-      <input id="att-date" type="text" readonly>
-
-      <label>Class Name</label>
-      <select id="att-className">
-        <option value="" disabled selected>Select class</option>
-        <option value="PG A">PG A</option>
-        <option value="PG B">PG B</option>
-        <option value="NURSERY">NURSERY</option>
-        <option value="KG">KG</option>
-        <option value="1ST">1ST</option>
-        <option value="2ND">2ND</option>
-        <option value="3RD">3RD</option>
-        <option value="4TH">4TH</option>
-        <option value="5TH">5TH</option>
-        <option value="6TH-A">6TH-A</option>
-        <option value="6TH-B">6TH-B</option>
-        <option value="7TH">7TH</option>
-        <option value="8TH-A">8TH-A</option>
-        <option value="8TH-B">8TH-B</option>
-        <option value="9TH">9TH</option>
-        <option value="10TH">10TH</option>
-      </select>
-      <div class="field-error" id="att-classNameError"></div>
+      <div class="actions-row">
+        <div class="field"><span class="lbl">Attendance Date</span><input id="att-date" type="text" readonly></div>
+        <div class="field">
+          <span class="lbl">Class Name</span>
+          <select id="att-className">
+            <option value="" disabled selected>Select class</option>
+            <option value="PG A">PG A</option>
+            <option value="PG B">PG B</option>
+            <option value="NURSERY">NURSERY</option>
+            <option value="KG">KG</option>
+            <option value="1ST">1ST</option>
+            <option value="2ND">2ND</option>
+            <option value="3RD">3RD</option>
+            <option value="4TH">4TH</option>
+            <option value="5TH">5TH</option>
+            <option value="6TH-A">6TH-A</option>
+            <option value="6TH-B">6TH-B</option>
+            <option value="7TH">7TH</option>
+            <option value="8TH-A">8TH-A</option>
+            <option value="8TH-B">8TH-B</option>
+            <option value="9TH">9TH</option>
+            <option value="10TH">10TH</option>
+          </select>
+          <div class="field-error" id="att-classNameError"></div>
+        </div>
+      </div>
 
       <div class="section-heading">
         <label>Absent Students</label>
@@ -1400,10 +1677,14 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
 
     <div class="card no-print">
       <div class="section-title">Student Details</div>
-      <div class="field"><span class="lbl">Date</span><input type="date" id="fr-date"></div>
-      <div class="field"><span class="lbl">Receipt No.</span><input id="fr-receiptNo" placeholder="Optional — for your own records"></div>
-      <div class="field"><span class="lbl">Student name</span><input id="fr-studentName" placeholder="e.g. Ayesha Khan"></div>
-      <div class="field"><span class="lbl">Class</span><input id="fr-studentClass" placeholder="e.g. 6-B"></div>
+      <div class="actions-row">
+        <div class="field"><span class="lbl">Date</span><input type="date" id="fr-date"></div>
+        <div class="field"><span class="lbl">Receipt No.</span><input id="fr-receiptNo" placeholder="Optional — for your own records"></div>
+      </div>
+      <div class="actions-row">
+        <div class="field"><span class="lbl">Student name</span><input id="fr-studentName" placeholder="e.g. Ayesha Khan"></div>
+        <div class="field"><span class="lbl">Class</span><input id="fr-studentClass" placeholder="e.g. 6-B"></div>
+      </div>
     </div>
 
     <div class="card no-print">
@@ -1523,16 +1804,22 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
 
     <div class="card">
       <div class="section-title">Student Details</div>
-      <div class="field"><span class="lbl">Student Name</span><input id="fm-student" type="text" autocomplete="off" placeholder="Enter student name"></div>
-      <div class="field"><span class="lbl">Class</span><input id="fm-className" type="text" autocomplete="off" placeholder="Enter class"></div>
+      <div class="actions-row">
+        <div class="field"><span class="lbl">Student Name</span><input id="fm-student" type="text" autocomplete="off" placeholder="Enter student name"></div>
+        <div class="field"><span class="lbl">Class</span><input id="fm-className" type="text" autocomplete="off" placeholder="Enter class"></div>
+      </div>
     </div>
 
     <div class="card">
       <div class="section-title">Fee Details</div>
-      <div class="field"><span class="lbl">Previous Fee</span><input id="fm-previous" type="number" min="0" inputmode="numeric" placeholder="Enter amount"></div>
-      <div class="field"><span class="lbl">Current Fee</span><input id="fm-current" type="number" min="0" inputmode="numeric" placeholder="Enter amount"></div>
-      <div class="field"><span class="lbl">Promotion Fee</span><input id="fm-promotion" type="number" min="0" inputmode="numeric" placeholder="Enter amount"></div>
-      <div class="field"><span class="lbl">Admission Fee</span><input id="fm-admission" type="number" min="0" inputmode="numeric" placeholder="Enter amount"></div>
+      <div class="actions-row">
+        <div class="field"><span class="lbl">Previous Fee</span><input id="fm-previous" type="number" min="0" inputmode="numeric" placeholder="Enter amount"></div>
+        <div class="field"><span class="lbl">Current Fee</span><input id="fm-current" type="number" min="0" inputmode="numeric" placeholder="Enter amount"></div>
+      </div>
+      <div class="actions-row">
+        <div class="field"><span class="lbl">Promotion Fee</span><input id="fm-promotion" type="number" min="0" inputmode="numeric" placeholder="Enter amount"></div>
+        <div class="field"><span class="lbl">Admission Fee</span><input id="fm-admission" type="number" min="0" inputmode="numeric" placeholder="Enter amount"></div>
+      </div>
 
       <div class="total-payable"><span>Total Payable</span><strong id="fm-total">Rs. 0</strong></div>
     </div>
@@ -1711,10 +1998,103 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
     </div>
   </section>
 
+  <!-- ================= MARKS SHEET TAB ================= -->
+  <section id="tab-marks" class="tab-panel">
+    <div class="card no-print" style="padding-bottom:18px;">
+      <div class="head-row">
+        <h1 id="marksTitle" class="panel-title" aria-label="MARKS SHEET"></h1>
+        <span class="subtitle">STUDENT MARKS SHEET</span>
+      </div>
+      <p class="panel-desc">Enter test marks, generate result cards, and share or print instantly.</p>
+    </div>
+
+<div class="body">
+
+  <!-- STEP 1 -->
+  <section class="card">
+    <h2><span class="step">Test details</span></h2>
+    <div class="grid two">
+      <!-- Row 1 -->
+      <div><label for="school">School name</label><input id="school" placeholder="e.g. Al Noor School" autocomplete="off"></div>
+      <div><label for="exam">Test name</label><input id="exam" placeholder="e.g. Monthly Test" autocomplete="off"></div>
+      <!-- Row 2 -->
+      <div><label for="cls">Class</label><select id="cls"></select></div>
+      <div>
+        <label for="subSel">Subject</label><select id="subSel"></select>
+        <div id="subOtherBox" class="hidden"><input id="subOther" placeholder="Type subject name" aria-label="Type subject name" autocomplete="off"></div>
+      </div>
+      <!-- Row 3 -->
+      <div><label for="total">Total marks</label><input id="total" type="number" min="1" inputmode="decimal" value="100"></div>
+      <div><label for="passing">Passing marks</label><input id="passing" type="number" min="0" inputmode="decimal" value="40"></div>
+    </div>
+  </section>
+
+  <!-- STEP 2 + LIST: side by side on desktop, stacked as before on mobile -->
+  <div class="ms-row">
+  <!-- STEP 2 -->
+  <section class="card" id="step2Card">
+    <h2><span class="step">Add students</span></h2>
+    <div id="addFormBox">
+      <div class="row2">
+        <div><label for="sroll">Roll no.</label><input id="sroll" type="number" min="1" step="1" inputmode="numeric" placeholder="Roll no."></div>
+        <div><label for="sname">Student name</label><input id="sname" placeholder="Name" autocomplete="off"></div>
+      </div>
+      <div class="mt12"><label for="smarks">Marks obtained</label><input id="smarks" type="number" min="0" step="0.5" inputmode="decimal" placeholder="Marks"></div>
+      <div class="mt12">
+        <div class="lbl">Status</div>
+        <div class="seg" role="radiogroup" aria-label="Student status">
+          <label class="seg-opt"><input type="radio" name="sst" value="present" checked><span>Present</span></label>
+          <label class="seg-opt absent"><input type="radio" name="sst" value="absent"><span>Absent</span></label>
+          <label class="seg-opt leave"><input type="radio" name="sst" value="leave"><span>Leave</span></label>
+        </div>
+      </div>
+      <div class="row"><button class="btn-sun btn-wide" id="addBtn">Add student</button></div>
+    </div>
+    <p class="hint hidden" id="clsHint">A class is selected — add roll no., name, father name and marks directly in the student list below.</p>
+    <div class="actions3">
+      <button class="btn-green" id="waAll">WhatsApp List</button>
+      <button class="btn-sun" id="pdfBtn">Save PDF</button>
+      <button class="btn-red" id="clearBtn">Clear all</button>
+    </div>
+    <div class="msg" id="msg" role="alert"></div>
+  </section>
+
+  <!-- LIST -->
+  <section class="card" id="listSection">
+    <div class="row" style="justify-content:space-between; align-items:center">
+      <h2 style="margin:0">Student list</h2>
+      <button class="btn-sun btn-small" id="addRowBtn">+ Add row</button>
+    </div>
+    <div class="table-wrap">
+      <table class="screen">
+        <colgroup>
+          <col class="col-roll"><col style="width:22%"><col style="width:22%">
+          <col style="width:12%"><col style="width:9%"><col style="width:9%">
+          <col style="width:11%"><col style="width:8%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Roll no.</th><th>Name</th><th>Father name</th><th class="num">Marks</th><th class="num">%</th>
+            <th>Grade</th><th>Result</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+  </div>
+
+  <div class="tiles" id="tiles"></div>
+</div>
+  </section>
+
   <div class="pagefoot">Rahim's Tools</div>
 
 </div>
 </div>
+
+<!-- ============ MARKS SHEET: PDF print pages (built by script; one .page per 30 rows) ============ -->
+<div id="printArea"></div>
 
 <!-- ============ DESIGNED ADMISSION PDF TEMPLATE (only appears when printing) ============ -->
 <div id="admpdf-template">
@@ -1844,6 +2224,7 @@ function showSection(name){
   document.body.classList.remove("view-home");
   document.body.classList.add("view-section");
   document.body.classList.toggle("view-hw", name === "homework");
+  document.body.classList.toggle("view-marks", name === "marks");
   window.scrollTo(0,0);
   if(name === "attendance"){
     checkAttendanceLock();
@@ -1862,6 +2243,8 @@ function showHome(){
   document.body.classList.remove("view-section");
   document.body.classList.add("view-home");
   document.body.classList.remove("view-hw");
+  document.body.classList.remove("view-marks");
+  document.body.classList.remove("marks-cls-active");
   if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
   window.scrollTo(0,0);
 }
@@ -1954,7 +2337,7 @@ setInterval(tickLiveClock, 1000);
 const FEE_PASSWORD = "mr05";
 let feeUnlocked = sessionStorage.getItem("pps_fee_unlocked") === "1";
 let pendingTab = null;
-const OPEN_TABS = ["attendance","homework"];
+const OPEN_TABS = ["attendance","homework","marks"];
 
 function tryTab(name){
   if(OPEN_TABS.indexOf(name) !== -1 || feeUnlocked){ proceedToTab(name); return; }
@@ -2005,6 +2388,7 @@ function buildGlitchTitle(elId, text){
 buildGlitchTitle("receiptTitle","FEE RECEIPT");
 buildGlitchTitle("reminderTitle","FEE REMINDER");
 buildGlitchTitle("admissionTitle","ADMISSION");
+buildGlitchTitle("marksTitle","MARKS SHEET");
 
 /* ============================================================
    ATTENDANCE TAB — logic unchanged, ids/functions namespaced
@@ -2751,6 +3135,7 @@ showHome();
   function issueCount(row){
     return (row.querySelector(".book").checked ? 1 : 0) +
            (row.querySelector(".notebook").checked ? 1 : 0) +
+           (row.querySelector(".incomplete").checked ? 1 : 0) +
            (row.querySelector(".homework").checked ? 1 : 0);
   }
   function refreshRow(row){
@@ -2788,15 +3173,11 @@ showHome();
       '<div class="hw-checks">' +
         '<label class="hw-chip"><input type="checkbox" class="book"><span class="ic">📚</span><span>Book nahi hai</span></label>' +
         '<label class="hw-chip"><input type="checkbox" class="notebook"><span class="ic">📓</span><span>Notebook nahi hai</span></label>' +
-        '<label class="hw-chip"><input type="checkbox" class="both"><span class="ic">🚫</span><span>Dono nahi hain</span></label>' +
+        '<label class="hw-chip"><input type="checkbox" class="incomplete"><span class="ic">🚫</span><span>Incomplete Notebook</span></label>' +
         '<label class="hw-chip"><input type="checkbox" class="homework"><span class="ic">📝</span><span>Homework nahi kiya</span></label>' +
       '</div>';
 
     row.addEventListener("change", function(e){
-      if(e.target.classList.contains("both")){
-        row.querySelector(".book").checked = e.target.checked;
-        row.querySelector(".notebook").checked = e.target.checked;
-      }
       refreshRow(row);
     });
     row.querySelector(".hw-remove").addEventListener("click", function(){
@@ -2836,10 +3217,11 @@ showHome();
       if(!name) return;
       valid++;
       var book = row.querySelector(".book").checked, notebook = row.querySelector(".notebook").checked,
-          both = row.querySelector(".both").checked, homework = row.querySelector(".homework").checked;
+          incomplete = row.querySelector(".incomplete").checked, homework = row.querySelector(".homework").checked;
       var issues = [];
-      if(both) issues.push("Book & Notebook nahi hain");
-      else { if(book) issues.push("Book nahi hai"); if(notebook) issues.push("Notebook nahi hai"); }
+      if(book) issues.push("Book nahi hai");
+      if(notebook) issues.push("Notebook nahi hai");
+      if(incomplete) issues.push("Incomplete Notebook");
       if(homework) issues.push("Homework nahi kiya");
       if(issues.length > 0) report += valid + ". *" + name + "* — " + issues.join(", ") + "\n";
     });
@@ -2870,6 +3252,1253 @@ showHome();
   window.hwSend = send;
 
   addStudent(false);   /* start with one student row */
+})();
+
+/* ============================================================
+   MARKS SHEET — merged inline from marks-sheet.html
+   ============================================================ */
+(function(){
+  var KEY_SCHOOL = "studentMarksSheet.school";   // remembered always
+  var MAX_SPAN = 500;
+  var PER_PAGE = 30;                       // entries on each PDF page
+
+  var CLASSES  = ["PG-A","PG-B","NURSERY","KINDERGARTEN","1ST","2ND","3RD","4TH","5TH",
+                  "6TH-A","6TH-B","7TH","8TH-A","8TH-B","9TH","10TH"];
+  var SUBJECTS = ["Urdu","English","Math","Science","Islamiat","Social Studies","Pak Studies",
+                  "General Knowledge","Computer","Drawing","Nazra","Physics","Chemistry","Biology"];
+
+  // Student rosters now come only from the live Google Sheet (see loadRostersFromSheet
+  // below), with the last successfully fetched copy cached in localStorage as an
+  // offline fallback. No workbook data is baked into the app anymore.
+  var EMPTY_ROSTERS = { "order": [], "data": {} };
+  var UNUSED_OLD_WORKBOOK_ROSTERS = {
+    "order": ["10th", "9th", "8th A", "8th B", "7th", "6th A", "6th B", "5TH", "4TH", "3RD", "2ND", "1ST", "KG", "Nur", "PG A", "PG B"],
+    "data": {
+      // ---- Class: 10th ----
+      "10th": [
+        {"roll":1, "name":"Sawera Umar", "father":"Umar Zada"},
+        {"roll":2, "name":"Duwa Qazi", "father":"Imran Ullah"},
+        {"roll":3, "name":"Afsheen Siraj", "father":"Siraj Ud Din"},
+        {"roll":4, "name":"Abdul Qadeer", "father":"Shad Muhammad"},
+        {"roll":5, "name":"Waqas Haider", "father":"Islam Ul Haq"},
+        {"roll":6, "name":"Zakria Shahbaz", "father":"Abdul Latif"},
+        {"roll":7, "name":"Muhammad Hasnain", "father":"Mustafa"},
+        {"roll":8, "name":"Waleed Aman", "father":"Aman Ullah Khan"},
+        {"roll":9, "name":"Nahyan Ismail", "father":"Ismail"},
+        {"roll":10, "name":"Muhammad Abbas", "father":"Farman Ullah"},
+        {"roll":11, "name":"Muhammad Sudais", "father":"Saeed Ullah"},
+        {"roll":12, "name":"Adil Amin", "father":"Ghulam Amin"},
+        {"roll":13, "name":"Kashif Qamar", "father":"Ashfaq Ahmad"},
+        {"roll":14, "name":"Imran Ullah", "father":"Altaf Hussain"},
+        {"roll":15, "name":"Tawqeer Ul Haq", "father":"Imad Ul Haq"},
+        {"roll":16, "name":"Ibad Ullah", "father":"Jabbar Khan"},
+        {"roll":17, "name":"Abbas Ahmad", "father":"Khaista Mahmood"},
+        {"roll":18, "name":"Tanveer Ahmad", "father":"Jan Mula"},
+        {"roll":19, "name":"Wisal Ihsan", "father":"Ihsan Ud Din"},
+        {"roll":20, "name":"Abdul Aziz", "father":"Abdur Rahman"},
+        {"roll":21, "name":"Mujtaba Utmani", "father":"Siraj Ud Din"},
+        {"roll":22, "name":"Basit Ali", "father":"Bakht Zada"},
+        {"roll":23, "name":"Siyam Ul Haq", "father":"Inam Ul Haq"},
+        {"roll":24, "name":"Qaseem Khan", "father":"Malang Badsha"},
+        {"roll":25, "name":"Sahil Khan", "father":"Hamd Ullah"},
+        {"roll":26, "name":"Muhammad Talha", "father":"Fazle Haq"},
+        {"roll":27, "name":"Zohaib Ahmad", "father":"Islam Ul Haq"},
+        {"roll":28, "name":"Mohsin Khan", "father":"Shah Khan"},
+        {"roll":29, "name":"Talha Mehmood", "father":"Mehmood Jan"},
+        {"roll":30, "name":"Muhammad Huzaifa", "father":"Mehmood Jan"},
+        {"roll":31, "name":"Muhammad Asif", "father":"Rahim Ullah"},
+        {"roll":32, "name":"Naeem Ul Haq", "father":"Amin Ul Haq"},
+        {"roll":33, "name":"Malak Azmat", "father":"Talimand"},
+        {"roll":34, "name":"Talha Muhammad", "father":"Baz Muhammad"},
+        {"roll":35, "name":"Sudais Khan", "father":"Alam Zeb"},
+        {"roll":36, "name":"Shah Fahad", "father":"Abid Ur Urahman"},
+        {"roll":37, "name":"Sudais Ikhyar", "father":"Ikhtyar"},
+        {"roll":38, "name":"Muhammad Zohaib", "father":"Mehboob"},
+        {"roll":39, "name":"Maryam Bibi", "father":"Talimand"},
+        {"roll":40, "name":"Amir Hamza", "father":"Muhammad Nasir Ud Din"},
+        {"roll":41, "name":"Malak Numan Khan", "father":"Muhammad Musa Hassan"},
+        {"roll":42, "name":"Muhammad Ilyas", "father":"Muhammad Naeem"},
+        {"roll":43, "name":"Asaf Iqbal", "father":"Ali Haider"},
+        {"roll":44, "name":"Umair Khan", "father":"Rafiullah"},
+        {"roll":45, "name":"Waseem Abbas", "father":"Halim ur Rahman"}
+      ],
+      // ---- Class: 9th ----
+      "9th": [
+        {"roll":1, "name":"Nasar", "father":"Sharif"},
+        {"roll":2, "name":"Muhammad Hassan Sardar", "father":"Sardar Muhammad"},
+        {"roll":3, "name":"Sohail Ahmad", "father":"Abdullah"},
+        {"roll":4, "name":"Yasir", "father":"Muhammad Khan"},
+        {"roll":5, "name":"Muhammad Zakria Khan", "father":"Umar Daraz Khan"},
+        {"roll":6, "name":"Saif Ullah", "father":"Noor Ullah Khan"},
+        {"roll":7, "name":"Yasar Sadiq", "father":"Fazal Wahab"},
+        {"roll":8, "name":"Muhammad Sudais", "father":"Sher Dad Khan"},
+        {"roll":9, "name":"Asad Ullah", "father":"Noor Muhammad"},
+        {"roll":10, "name":"Saqib Ali", "father":"Bahar Ali"},
+        {"roll":11, "name":"Muhammad Ali", "father":"Umar Sadiq"},
+        {"roll":12, "name":"Waqas", "father":"Muharam"},
+        {"roll":13, "name":"Muhammad Abbas", "father":"Umar Khaliq"},
+        {"roll":14, "name":"Sudais Ahmad", "father":"Khan Ullah"},
+        {"roll":15, "name":"Marwan Khan", "father":"Mohammad Yar"},
+        {"roll":16, "name":"Alyan Khan", "father":"Mohammad Yar"},
+        {"roll":17, "name":"Hilal Ahmad", "father":"Gul Dawat Khan"},
+        {"roll":18, "name":"Huzaifa Rahman", "father":"Abdur Rahman"},
+        {"roll":19, "name":"Ihtisham Ul Haq", "father":"Hameed Ul Haq Khan"},
+        {"roll":20, "name":"Lubna Qazi", "father":"Qazi Rahman"},
+        {"roll":21, "name":"Abeera Aziz", "father":"Aziz Ullah Khan"},
+        {"roll":22, "name":"Yousra Javed", "father":"Muhammad Javed"},
+        {"roll":23, "name":"Najma Khyber", "father":"Khyber Khan"},
+        {"roll":24, "name":"Eman Nawaz", "father":"Muhammad Nawaz Khan"},
+        {"roll":25, "name":"Farha Nawaz", "father":"Shah Nawaz"},
+        {"roll":26, "name":"Mehwish Qureshi", "father":"Ahmad Ullah Qureshi"},
+        {"roll":27, "name":"Ayesha Rahman", "father":"Fatih Ur Rahman"},
+        {"roll":28, "name":"Fatima Naz", "father":"Shah Khisro"},
+        {"roll":29, "name":"Aliza Nawaz", "father":"Ahmad Nawaz Khan"},
+        {"roll":30, "name":"Eman Begum", "father":"Sultan Zeb"},
+        {"roll":31, "name":"Awais Ahmad", "father":"Said Ur Rahman"},
+        {"roll":32, "name":"Atif", "father":"Ikhtiyar"},
+        {"roll":33, "name":"Awais", "father":"Ikhtiyar"},
+        {"roll":34, "name":"Jaunaid Zafar", "father":"Zafar Muhammad"},
+        {"roll":35, "name":"Hamza", "father":"Muhammad Said"},
+        {"roll":36, "name":"Hamdan Ahmad", "father":"Islam Muhammad"},
+        {"roll":37, "name":"Zakir Ullah", "father":"Bahadar Zaib"},
+        {"roll":38, "name":"Maaz", "father":"???"},
+        {"roll":39, "name":"Shihram", "father":"???"}
+      ],
+      // ---- Class: 8th A ----
+      "8th A": [
+        {"roll":1, "name":"Uzair", "father":"Masood khan"},
+        {"roll":2, "name":"Saad", "father":"Khan Muhammad"},
+        {"roll":3, "name":"Hamza Khan", "father":"Haya Said"},
+        {"roll":4, "name":"Danyal", "father":"Nawsheer khan"},
+        {"roll":5, "name":"Hammad", "father":"Ali Rehman"},
+        {"roll":6, "name":"Mudassir", "father":"Wasim Akram"},
+        {"roll":7, "name":"Hasnain", "father":"Attaullah"},
+        {"roll":8, "name":"Ishaq", "father":"Inam ullah"},
+        {"roll":9, "name":"Ibrar Ahmad", "father":"Inayat khan"},
+        {"roll":10, "name":"Unais Khan", "father":"Naseer ud Din"},
+        {"roll":11, "name":"Sameer", "father":"Shabir ur Rehman"},
+        {"roll":12, "name":"Ansar II", "father":"Muhammad Israr"},
+        {"roll":13, "name":"Mohsin", "father":"Zafar Ali"},
+        {"roll":14, "name":"Rayan Anjum", "father":"Rahman ul Haq"},
+        {"roll":15, "name":"Muhammad Ilyas", "father":"Rizwan Ullah"},
+        {"roll":16, "name":"Ansar 1", "father":"Shah Jamal"},
+        {"roll":17, "name":"Talal", "father":"Shah Jamal"},
+        {"roll":18, "name":"Muhammad Rayan", "father":"Muhammad Ayaz"},
+        {"roll":19, "name":"Mustaqeem Shah", "father":"Zahir shah"},
+        {"roll":20, "name":"Shahzad", "father":"Hida Muhammad"},
+        {"roll":21, "name":"Sudais I", "father":"Said ur Rahman"},
+        {"roll":22, "name":"Sudais II", "father":"Halim ur Rahman"},
+        {"roll":23, "name":"Muhammad Saftain", "father":"Sher Badshah"},
+        {"roll":24, "name":"Ibrar Ahmad ii", "father":"Usman"},
+        {"roll":25, "name":"Samad", "father":"Hassan Sultan"},
+        {"roll":26, "name":"Anis", "father":"Izzat khan"},
+        {"roll":27, "name":"Mubarak Zeb", "father":"Sabir Khan"},
+        {"roll":28, "name":"Faizan", "father":"Jalal ud Din"},
+        {"roll":29, "name":"Mustafa", "father":"Usman Ali"},
+        {"roll":30, "name":"Rayan", "father":"Haroon badshah"},
+        {"roll":31, "name":"Sehan", "father":"Inam ullah"},
+        {"roll":32, "name":"Rehan", "father":"Saleem khan"},
+        {"roll":33, "name":"Umair", "father":"Ghulam Sadiq"},
+        {"roll":34, "name":"Mahmood", "father":"Ibrahim"}
+      ],
+      // ---- Class: 8th B ----
+      "8th B": [
+        {"roll":1, "name":"Urwa Ali", "father":"Badshah Ali"},
+        {"roll":2, "name":"Aqsa Rehan", "father":"Rehan Ud Din"},
+        {"roll":3, "name":"Nafeesa Gul", "father":"Sufaid Gul"},
+        {"roll":4, "name":"Tooba Ayubi", "father":"Salah Ud Din"},
+        {"roll":5, "name":"Hoora Sardar", "father":"Sardar Badshah"},
+        {"roll":6, "name":"Urwa Ikram", "father":"Ikram Ullah"},
+        {"roll":7, "name":"Aneela Ghafoor", "father":"Muhammad Shah Ghafoor Khan"},
+        {"roll":8, "name":"Eman Nawaz", "father":"Shah Nawaz Khan"},
+        {"roll":9, "name":"Romesa Rahman", "father":"Rahman Ullah"},
+        {"roll":10, "name":"Maroosha", "father":"Jamroz Khan"},
+        {"roll":11, "name":"Eman Zaib", "father":"Alam Zaib"},
+        {"roll":12, "name":"Sania Qureshi", "father":"Ahmad Ullah Qureshi"},
+        {"roll":13, "name":"Fareeha", "father":"Inayat Ur Rahman"}
+      ],
+      // ---- Class: 7th ----
+      "7th": [
+        {"roll":1, "name":"Adil Hussain", "father":"Ikram ullah"},
+        {"roll":2, "name":"Jalwa Islam", "father":"Bakht Shehzad"},
+        {"roll":3, "name":"Sada Islam", "father":"Bakht Shehzad"},
+        {"roll":4, "name":"Abdul Qadir", "father":"Nazir khan"},
+        {"roll":5, "name":"Hafsa", "father":"Muhammad Mustafa"},
+        {"roll":6, "name":"Filza", "father":"Ismail"},
+        {"roll":7, "name":"Aafya", "father":"Abdul Latif"},
+        {"roll":8, "name":"Maroosha", "father":"Yar Muhammad"},
+        {"roll":9, "name":"Saad", "father":"Hafiz ullah"},
+        {"roll":10, "name":"Hammad", "father":"Shafi ullah"},
+        {"roll":11, "name":"Aizaz", "father":"Haleem"},
+        {"roll":12, "name":"Uzair", "father":"Hafeez ur Rahman"},
+        {"roll":13, "name":"Safwan Khan 1", "father":"Hafeez ur Rahman"},
+        {"roll":14, "name":"Abdur Rahman", "father":"Hameed ullah"},
+        {"roll":15, "name":"Hizba Noor", "father":"Abid ullah"},
+        {"roll":16, "name":"Zakriya 1", "father":"Farman khan"},
+        {"roll":17, "name":"Yahya", "father":"Siraj khan"},
+        {"roll":18, "name":"Aizaz", "father":"Rahim zada"},
+        {"roll":19, "name":"Hussain", "father":"Sardar"},
+        {"roll":20, "name":"Sameer Khan", "father":"Said Rasool"},
+        {"roll":21, "name":"Fareeha", "father":"Sardar badshah"},
+        {"roll":22, "name":"Waqab Ahmad", "father":"Muharam"},
+        {"roll":23, "name":"Hasnain", "father":"Fazal Rahman"},
+        {"roll":24, "name":"Arif", "father":"Azam khan"},
+        {"roll":25, "name":"Zakriya II", "father":"Ali Rahman"},
+        {"roll":26, "name":"Waqas Khan", "father":"Mustafa"},
+        {"roll":27, "name":"Harira", "father":"Ikram Ullah"},
+        {"roll":28, "name":"Hamza", "father":"Fazli Mula"},
+        {"roll":29, "name":"Horia", "father":"Riaz ul Haq"},
+        {"roll":30, "name":"Saad", "father":"Gul Zada"},
+        {"roll":31, "name":"Mehran Khan", "father":"Tahir Salim"},
+        {"roll":32, "name":"Hammad Khan", "father":"Tariq Ahmad"},
+        {"roll":33, "name":"Burhan", "father":"Zia Ullah"},
+        {"roll":34, "name":"Noor Samad", "father":"Anwar"},
+        {"roll":35, "name":"Elman", "father":"Mehboob"},
+        {"roll":36, "name":"Hilal", "father":"Bilal"},
+        {"roll":37, "name":"Abdur Rahman", "father":"Nawab Zada"},
+        {"roll":38, "name":"Zakrya III", "father":"Ameer Ahmad Khan"},
+        {"roll":39, "name":"Numan Khan", "father":"Farosh Shah"},
+        {"roll":40, "name":"Muhammad Arman Shah", "father":"M.Parviz Shah"},
+        {"roll":41, "name":"Muhammad Ibrahim Khan", "father":"Shah Sawar Khan"}
+      ],
+      // ---- Class: 6th A ----
+      "6th A": [
+        {"roll":1, "name":"Fiza Noor", "father":"Ishaq Ahmad"},
+        {"roll":2, "name":"Lubna", "father":"Abdullah"},
+        {"roll":3, "name":"Safoora", "father":"Abdullah"},
+        {"roll":4, "name":"Rehma", "father":"Shehreyar"},
+        {"roll":5, "name":"Mehak", "father":"Muhammad Yousaf"},
+        {"roll":6, "name":"Maria Sumbal", "father":"Hassan Sultan"},
+        {"roll":7, "name":"Habiba Bukhari", "father":"Faiz Ul Bari"},
+        {"roll":8, "name":"Lubaba Sami", "father":"Sami Ullah"},
+        {"roll":9, "name":"Haseeba", "father":"Rahim Ullah"},
+        {"roll":10, "name":"Kalsoom", "father":"Khyber"},
+        {"roll":11, "name":"Manha", "father":"Shah Khisro"},
+        {"roll":12, "name":"Ayesha", "father":"Muhammad Bilal"},
+        {"roll":13, "name":"Ayan", "father":"Siraj khan"},
+        {"roll":14, "name":"Muhammad Rayan", "father":"Abdullah khan"},
+        {"roll":15, "name":"Inzimam", "father":"Bacha Rehman"},
+        {"roll":16, "name":"Ibadullah", "father":"Imroz Khan"},
+        {"roll":17, "name":"Tabsheer", "father":"Imad ul Haq"},
+        {"roll":18, "name":"Taqweem", "father":"Imad ul Haq"},
+        {"roll":19, "name":"Yasir Hilal", "father":"Fazal Aleem Khan"},
+        {"roll":20, "name":"Syed Ali", "father":"Lal Zahir jan"},
+        {"roll":21, "name":"Usman", "father":"Lal Zahir jan"},
+        {"roll":22, "name":"Muhammad Saad", "father":"Ali Rehman"},
+        {"roll":23, "name":"Ayanullah", "father":"Aminul Haq"},
+        {"roll":24, "name":"Burhanud Din", "father":"Rahmanud Din"},
+        {"roll":25, "name":"Ayan Saleem", "father":"Noor Saleem"},
+        {"roll":26, "name":"Asawir", "father":"Usman"},
+        {"roll":27, "name":"Zikra", "father":"Faheem"},
+        {"roll":28, "name":"Adan", "father":"Habib Ur Rahman"}
+      ],
+      // ---- Class: 6th B ----
+      "6th B": [
+        {"roll":1, "name":"Farman Ullah", "father":"Muhammad Javed"},
+        {"roll":2, "name":"Danish", "father":"Safaid Gul"},
+        {"roll":3, "name":"Rehan", "father":"Farwez khan"},
+        {"roll":4, "name":"Abdullah", "father":"Nizamuddin"},
+        {"roll":5, "name":"Muhammad Murse", "father":"Muhammad Nazir"},
+        {"roll":6, "name":"Muhammad Saud", "father":"Muhammad Ibrahim Khan"},
+        {"roll":7, "name":"Arif", "father":"Ashfaq Ahmad"},
+        {"roll":8, "name":"Yazdan Khan", "father":"Matiullah"},
+        {"roll":9, "name":"Sohaib", "father":"Habib"},
+        {"roll":10, "name":"Umar", "father":"Lal Zahir jan"},
+        {"roll":11, "name":"Mihran", "father":"Inam ul Haq"},
+        {"roll":12, "name":"Haban khan", "father":"Jihan badshah"},
+        {"roll":13, "name":"Nihal Ahmad", "father":"Amir Bahadar Khan"},
+        {"roll":14, "name":"Sohaib Ilyas", "father":"Muhammad Ilyas"},
+        {"roll":15, "name":"Hammad I", "father":"Abid ullah"},
+        {"roll":16, "name":"Muhammad Talha", "father":"Iqbal Ud Din"},
+        {"roll":17, "name":"Marwan Ud Din", "father":"Rehan Ud Din"},
+        {"roll":18, "name":"Hammad Khan", "father":"Tariq Ahmad"},
+        {"roll":19, "name":"Younas", "father":"Bahadar Zeb"},
+        {"roll":20, "name":"Muhammad Saftain", "father":"Riaz khan"},
+        {"roll":21, "name":"Mushtaq Khan", "father":"Umar Muhammad"},
+        {"roll":22, "name":"Muhammad Saad", "father":"Muhammad Ibrahim"},
+        {"roll":23, "name":"Muhammad Sameer", "father":"Muhammad Javid"},
+        {"roll":24, "name":"Abdal", "father":"Altaf Husain"},
+        {"roll":25, "name":"Ahmad Rayan", "father":"Rahim Zaid khan"},
+        {"roll":26, "name":"Hasnain", "father":"Akbar khan"}
+      ],
+      // ---- Class: 5TH ----
+      "5TH": [
+        {"roll":1, "name":"Zuhaib", "father":"Saeed ullah"},
+        {"roll":2, "name":"Muhammad Hashir", "father":"Muhammad Javid"},
+        {"roll":3, "name":"Muhammad Sunain", "father":"Sher Dad Khan"},
+        {"roll":4, "name":"Safa Ali", "father":"Zakir Ali"},
+        {"roll":5, "name":"Marwa", "father":"Zakir Ali"},
+        {"roll":6, "name":"Duwa Gul", "father":"Gul Zar khan"},
+        {"roll":7, "name":"Arsalan", "father":"Nawsher khan"},
+        {"roll":8, "name":"Ibad", "father":"Imroz Khan"},
+        {"roll":9, "name":"Hareera", "father":"Nawroz khan"},
+        {"roll":10, "name":"Talha", "father":"Qazi Rahman"},
+        {"roll":11, "name":"Masaab", "father":"Muqadar khan"},
+        {"roll":12, "name":"Hasnain", "father":"Halim"},
+        {"roll":13, "name":"Muneeba", "father":"Abidullah khan"},
+        {"roll":14, "name":"Shayan", "father":"Haroon Badshah"},
+        {"roll":15, "name":"Mehtab", "father":"Hazrat Umar"},
+        {"roll":16, "name":"Abubakr", "father":"Hassan Sultan"},
+        {"roll":17, "name":"Ayza", "father":"Ibrahim"},
+        {"roll":18, "name":"Mansha Manal", "father":"Muhammad Ilyas"},
+        {"roll":19, "name":"Tooba", "father":"Abdul Hamid"},
+        {"roll":20, "name":"Arwa", "father":"Abdul Hamid"},
+        {"roll":21, "name":"Khubaib", "father":"Rahat ullah"},
+        {"roll":22, "name":"Rizwan", "father":"Inayat ullah"},
+        {"roll":23, "name":"Yaseen", "father":"Hamid"},
+        {"roll":24, "name":"Azmam", "father":"Nisaar Ud Din"},
+        {"roll":25, "name":"Hira Hayat", "father":"Sher Hayat"},
+        {"roll":26, "name":"Horain Hayat", "father":"Sher Hayat"},
+        {"roll":27, "name":"Sumayya", "father":"M Rashid"},
+        {"roll":28, "name":"Anfal", "father":"M Riaz"},
+        {"roll":29, "name":"Hamza", "father":"Shafiullah"},
+        {"roll":30, "name":"Hasanin", "father":"Muhsin khan"},
+        {"roll":31, "name":"Uzair", "father":"Muhammad Ilyas"},
+        {"roll":32, "name":"Rayan", "father":"Abdullah"},
+        {"roll":33, "name":"Ayesha Bibi", "father":"Ibad ullah"},
+        {"roll":34, "name":"Yahya", "father":"Ali khan"},
+        {"roll":35, "name":"Adil", "father":"Muhammad Ibrahim"},
+        {"roll":36, "name":"Zarak", "father":"M. Nawaz khan"},
+        {"roll":37, "name":"Zakriya", "father":"Siyal Muhammad"},
+        {"roll":38, "name":"Adnan", "father":"Usman"},
+        {"roll":39, "name":"Tahseen", "father":"Tariq"},
+        {"roll":40, "name":"Alyan", "father":"Mahmood"},
+        {"roll":41, "name":"Filza", "father":"Fayaz"},
+        {"roll":42, "name":"Muhammad Abuzar", "father":"Rahim Dad khan"},
+        {"roll":43, "name":"Hakim Ullah", "father":"Abdul Wahab"},
+        {"roll":44, "name":"Zaid ur Rahman", "father":"Habib Ur Rahman"},
+        {"roll":45, "name":"Aamna", "father":"Zia Ullah"},
+        {"roll":46, "name":"Rayan", "father":"Inam ul Haq"},
+        {"roll":47, "name":"Abdul Wahab", "father":"Din Badshah"},
+        {"roll":48, "name":"Muhammad Ahmad", "father":"Liaqat Zada"}
+      ],
+      // ---- Class: 4TH ----
+      "4TH": [
+        {"roll":1, "name":"Gulan", "father":"Alam zaib"},
+        {"roll":2, "name":"Kaleem", "father":"Sami ullah"},
+        {"roll":3, "name":"Tooba", "father":"Abid ullah"},
+        {"roll":4, "name":"Romaisa Bibi", "father":"Naseer ud Din"},
+        {"roll":5, "name":"Nooha BiBi", "father":"Naseer ud Din"},
+        {"roll":6, "name":"Yaqoob", "father":"Inam ullah"},
+        {"roll":7, "name":"Aftab", "father":"Ali khan"},
+        {"roll":8, "name":"Maria", "father":"Yar Muhammad"},
+        {"roll":9, "name":"Roshni Bibi", "father":"Sher Dad Khan"},
+        {"roll":10, "name":"Ibtisam", "father":"Shir Hameed"},
+        {"roll":11, "name":"Azlan Aziz", "father":"Aziz Ullah Khan"},
+        {"roll":12, "name":"Arman Ali", "father":"Salim Badshah"},
+        {"roll":13, "name":"Danyal", "father":"Sajjad"},
+        {"roll":14, "name":"Aroob", "father":"Jehangir"},
+        {"roll":15, "name":"Sanan", "father":"Umar Wahid"},
+        {"roll":16, "name":"Horain", "father":"Muhammad Yousaf"},
+        {"roll":17, "name":"Hammas", "father":"Suliman"},
+        {"roll":18, "name":"Saud", "father":"Badshah Ali"},
+        {"roll":19, "name":"Umi E Sulima", "father":"Sufaid Gull"},
+        {"roll":20, "name":"Roshani Iltaf", "father":"Iltaf Hussain"},
+        {"roll":21, "name":"Amna", "father":"Salim Badshah"},
+        {"roll":22, "name":"Mashal Naeem", "father":"Naeem Ud Din"},
+        {"roll":23, "name":"Komal", "father":"Sardar Badshah"},
+        {"roll":24, "name":"Urooj Zahir", "father":"Zahir Shah"},
+        {"roll":25, "name":"Muhammad Afnan", "father":"Shahabud Din"},
+        {"roll":26, "name":"Yousaf", "father":"Umar Rahman"},
+        {"roll":27, "name":"Muhammad Shoryiam", "father":"Saeed Ur Rahman"},
+        {"roll":28, "name":"Hashir", "father":"Ikram"},
+        {"roll":29, "name":"Arfa Ihsan", "father":"Ihsan ul Haq"},
+        {"roll":30, "name":"Siyam", "father":"Sanobar"},
+        {"roll":31, "name":"Abubaker", "father":"Javid"},
+        {"roll":32, "name":"Abudarda", "father":"Ihsan Ullah"},
+        {"roll":33, "name":"Ayeza", "father":"Saif ur Rahman"},
+        {"roll":34, "name":"Hammad", "father":"Hafiz ur Rahman"},
+        {"roll":35, "name":"Basam", "father":"Asif"},
+        {"roll":36, "name":"Mohsin", "father":"Rahman ullah"},
+        {"roll":37, "name":"Arham", "father":"Adnan Ul Ahad"},
+        {"roll":38, "name":"Iqra", "father":"Muhammad Ishaq"},
+        {"roll":39, "name":"Ayan", "father":"Muhammad Ishaq"},
+        {"roll":40, "name":"Zakriya", "father":"Luqman Ali"},
+        {"roll":41, "name":"Omima", "father":"Shah Jamal"},
+        {"roll":42, "name":"Fakhar Zaman", "father":"Gul Zaman"},
+        {"roll":43, "name":"Rohailur Rahman", "father":"Fayazud Din"}
+      ],
+      // ---- Class: 3RD ----
+      "3RD": [
+        {"roll":1, "name":"Amna", "father":"Manzoor"},
+        {"roll":2, "name":"Hashir", "father":"Muhammad Zaib"},
+        {"roll":3, "name":"Ramla", "father":"Manzoor"},
+        {"roll":4, "name":"Romaisa", "father":"Fazal Rahman"},
+        {"roll":5, "name":"Eshal", "father":"Sami"},
+        {"roll":6, "name":"Elma", "father":"Abdul Latif"},
+        {"roll":7, "name":"Omama", "father":"Umair Habib"},
+        {"roll":8, "name":"Ayyan 1", "father":"Badshah Hussain"},
+        {"roll":9, "name":"Mujtaba", "father":"Jamroz khan"},
+        {"roll":10, "name":"Ayan 2", "father":"Fazal Haq"},
+        {"roll":11, "name":"Hamdan", "father":"Hasin ullah"},
+        {"roll":12, "name":"Abbas", "father":"Asif"},
+        {"roll":13, "name":"Amarha", "father":"Alam zaib"},
+        {"roll":14, "name":"Afnan", "father":"Ayaz"},
+        {"roll":15, "name":"Alyan", "father":"Islam ul Haq"},
+        {"roll":16, "name":"Muhammad Kumail", "father":"Riaz ul Haq"},
+        {"roll":17, "name":"Anoosha", "father":"Islam ul Haq"},
+        {"roll":18, "name":"Umair", "father":"Abdur Rehman"},
+        {"roll":19, "name":"Anas Khan", "father":"Rizwan ullah"},
+        {"roll":20, "name":"Hammad Khan", "father":"Rizwan ullah"},
+        {"roll":21, "name":"Adnan", "father":"Amjad"},
+        {"roll":22, "name":"Yazzan", "father":"Muhammad Ayaz"},
+        {"roll":23, "name":"Eman", "father":"Jamal shah"},
+        {"roll":24, "name":"Shifa", "father":"Rahman ud Din"},
+        {"roll":25, "name":"Abdal", "father":"Irshad"},
+        {"roll":26, "name":"Yahya Khan", "father":"Sher Hayat"},
+        {"roll":27, "name":"Hammas", "father":"Jabbar Khan"},
+        {"roll":28, "name":"Talha", "father":"Fazal Hayat"},
+        {"roll":29, "name":"Maryam", "father":"Said Nabi"},
+        {"roll":30, "name":"Abubakar", "father":"Siyal Muhammad"},
+        {"roll":31, "name":"Muhammad", "father":"Wahid ullah"},
+        {"roll":32, "name":"Mazeen", "father":"Uzair"},
+        {"roll":33, "name":"Mustafa", "father":"Abdul Satar"},
+        {"roll":34, "name":"Azan Khan", "father":"Altaf khan"},
+        {"roll":35, "name":"Shahid Ullah", "father":"Hashim"},
+        {"roll":36, "name":"Salwa", "father":"Tahir Wali"},
+        {"roll":37, "name":"Mehmood", "father":"Tahir Wali"},
+        {"roll":38, "name":"Hilal", "father":"Israr"},
+        {"roll":39, "name":"Safwan", "father":"missing"},
+        {"roll":40, "name":"Ukasha", "father":"Ukash ad"},
+        {"roll":41, "name":"Maryam Bibi", "father":"Abdul Wahid"},
+        {"roll":42, "name":"Aysha Bibi", "father":"Abdul Wahid"},
+        {"roll":43, "name":"Ansar", "father":"Farman"}
+      ],
+      // ---- Class: 2ND ----
+      "2ND": [
+        {"roll":1, "name":"Fatima Rahim", "father":"Rahim Badshah"},
+        {"roll":2, "name":"Hala", "father":"Manzor"},
+        {"roll":3, "name":"Habiba", "father":"Gul Muhammad"},
+        {"roll":4, "name":"Alina", "father":"Hassan Sultan"},
+        {"roll":5, "name":"Anoosha", "father":"Masood Ahmad"},
+        {"roll":6, "name":"Ariyam", "father":"Islam ul Haq"},
+        {"roll":7, "name":"Saleena", "father":"Tawheed ullah"},
+        {"roll":8, "name":"Dua", "father":"Hamid"},
+        {"roll":9, "name":"Arshi", "father":"Said Rasool"},
+        {"roll":10, "name":"Tooba", "father":"Saif ur Rahman"},
+        {"roll":11, "name":"Fareeha", "father":"Sikandar khan"},
+        {"roll":12, "name":"Hira", "father":"Waseem"},
+        {"roll":13, "name":"Iraj", "father":"Nasir ullah"},
+        {"roll":14, "name":"Rayan Ahmad", "father":"Ashfaq Ahmad"},
+        {"roll":15, "name":"Rayan", "father":"Yar Muhammad"},
+        {"roll":16, "name":"Rayan", "father":"Sharif"},
+        {"roll":17, "name":"Rayan", "father":"Kamil"},
+        {"roll":18, "name":"Afnan", "father":"Umar wahid"},
+        {"roll":19, "name":"Afnan", "father":"Feroz khan"},
+        {"roll":20, "name":"Muhammad Afnan", "father":"Inam ul Haq"},
+        {"roll":21, "name":"Muhammad Yahya", "father":"Haya Said"},
+        {"roll":22, "name":"Wajid", "father":"Shehryar"},
+        {"roll":23, "name":"Hashir", "father":"Imad ul Haq"},
+        {"roll":24, "name":"Tahseen", "father":"Zafar Ali"},
+        {"roll":25, "name":"Sadan", "father":"Uzair"},
+        {"roll":26, "name":"Hassan Ali", "father":"Gul Zada"},
+        {"roll":27, "name":"Muhammad Shah", "father":"Shah Nawaz khan"},
+        {"roll":28, "name":"Afraz", "father":"Arshad"},
+        {"roll":29, "name":"Umar Farooq", "father":"Ihsan ul Haq"},
+        {"roll":30, "name":"Mustafa", "father":"Nisar"},
+        {"roll":31, "name":"Muhammad Asif", "father":"Inam Ud Din"},
+        {"roll":32, "name":"Muhammad Abyan", "father":"Aqil Islam"},
+        {"roll":33, "name":"Shahraam", "father":"Adnan"},
+        {"roll":34, "name":"Waleed", "father":"Niaz Ali"},
+        {"roll":35, "name":"Arishman", "father":"Ashraf"},
+        {"roll":36, "name":"Zahak", "father":"Waheed ullah Jan"},
+        {"roll":37, "name":"Sanan", "father":"Adnan"},
+        {"roll":38, "name":"Bilal", "father":"Hameed"},
+        {"roll":39, "name":"Hamdan", "father":"Missing"},
+        {"roll":40, "name":"Muhammad Afnan Shah", "father":"Muhmmad Pervez Shah"},
+        {"roll":41, "name":"Mawya", "father":"Farman"},
+        {"roll":42, "name":"Hunaifur Rahman", "father":"Fayazud Din"},
+        {"roll":43, "name":"Khubab", "father":"'''df"}
+      ],
+      // ---- Class: 1ST ----
+      "1ST": [
+        {"roll":1, "name":"Sufyan Ali Shah", "father":"Zahir Shah"},
+        {"roll":2, "name":"Sahal", "father":"Yaseen"},
+        {"roll":3, "name":"Khushal", "father":"Sami"},
+        {"roll":4, "name":"Marwan", "father":"Amir Zada"},
+        {"roll":5, "name":"Sadaf", "father":"Ikram ullah"},
+        {"roll":6, "name":"Hina", "father":"Javid"},
+        {"roll":7, "name":"Ajwa", "father":"Masood Ahmad"},
+        {"roll":8, "name":"Hashir", "father":"Islam ul Haq"},
+        {"roll":9, "name":"Fahad", "father":"Islam ud Din"},
+        {"roll":10, "name":"Muhammad Yamman", "father":"Muhammad Ilyas"},
+        {"roll":11, "name":"Zarar", "father":"Muhammad Nawaz Khan"},
+        {"roll":12, "name":"Abdullah", "father":"Siraj ud din"},
+        {"roll":13, "name":"Saqib", "father":"Tariq"},
+        {"roll":14, "name":"Aroosh", "father":"Farman"},
+        {"roll":15, "name":"Urwa Ihsan", "father":"Ihsan ul Haq"},
+        {"roll":16, "name":"Mustafa", "father":"yaseen"},
+        {"roll":17, "name":"Dilair", "father":"Amjad"},
+        {"roll":18, "name":"Toba", "father":"Manzoor"},
+        {"roll":19, "name":"Sawera", "father":"Nowroz khan"},
+        {"roll":20, "name":"Ahmad Shehzad", "father":"Ibrahim"},
+        {"roll":21, "name":"Awais", "father":"Abdullah"},
+        {"roll":22, "name":"Sana Ullah", "father":"Shafi ullah"},
+        {"roll":23, "name":"Zainab", "father":"Dilawar"},
+        {"roll":24, "name":"Eshal", "father":"Fawad"},
+        {"roll":25, "name":"Ishaq", "father":"Muhammad Sheerin"},
+        {"roll":26, "name":"Ismail", "father":"Yasin Mehmood"},
+        {"roll":27, "name":"Hanzala Hayat", "father":"Fazal Hayat"},
+        {"roll":28, "name":"Zeeshan", "father":"Azam Khan"},
+        {"roll":29, "name":"Ishaq", "father":"Fazal Rahim"},
+        {"roll":30, "name":"Taqwa", "father":"Jabbar"},
+        {"roll":31, "name":"Adeeba Zia", "father":"Ziaul Haq"},
+        {"roll":32, "name":"Bareera", "father":"Saif Ullah"},
+        {"roll":33, "name":"Muhammad Sheban", "father":"Farmanullah"},
+        {"roll":34, "name":"Abu Zar", "father":"Muhammad Ilyas"},
+        {"roll":35, "name":"Ahmad Ayan", "father":"Atta ullah"},
+        {"roll":36, "name":"Talha", "father":"Hayat Ullah"},
+        {"roll":37, "name":"Hashim", "father":"Rahman Gul"},
+        {"roll":38, "name":"Mubashir Ihsan", "father":"Ihsan Khan"}
+      ],
+      // ---- Class: KG ----
+      "KG": [
+        {"roll":1, "name":"Younas", "father":"Salar Khan"},
+        {"roll":2, "name":"Israr", "father":"Hashim"},
+        {"roll":3, "name":"Hanif Ullah", "father":"Irfan"},
+        {"roll":4, "name":"Haroon", "father":"Ikram Ullah"},
+        {"roll":5, "name":"Muzamil Shah", "father":"Haya Said"},
+        {"roll":6, "name":"Arsalan", "father":"Abdullah"},
+        {"roll":7, "name":"Abdal", "father":"Sajjad"},
+        {"roll":8, "name":"Shazil", "father":"Waheed Ullah Jan"},
+        {"roll":9, "name":"Saif Ullah", "father":"Liaqat"},
+        {"roll":10, "name":"Affan", "father":"Yaseen"},
+        {"roll":11, "name":"Ilham", "father":"Sher Hamid"},
+        {"roll":12, "name":"Uzair", "father":"Hilal"},
+        {"roll":13, "name":"Zayan", "father":"Yaseen"},
+        {"roll":14, "name":"Tayyab", "father":"Sadiq"},
+        {"roll":15, "name":"Zalan", "father":"Tawsif"},
+        {"roll":16, "name":"Saim", "father":"Sami Ullah"},
+        {"roll":17, "name":"Alyan", "father":"Ijaz"},
+        {"roll":18, "name":"Yousaf", "father":"Ihsan Ul Haq"},
+        {"roll":19, "name":"Ahmar", "father":"Muhammad Javid"},
+        {"roll":20, "name":"Zunish", "father":"Abdur Rehman"},
+        {"roll":21, "name":"Marwa", "father":"Jabbar"},
+        {"roll":22, "name":"Horain", "father":"Islam ul Haq"},
+        {"roll":23, "name":"Ajwa", "father":"Tahir Wali"},
+        {"roll":24, "name":"Fatima Zia", "father":"Zia Ul Haq"},
+        {"roll":25, "name":"Urwa", "father":"Alam Zaib"},
+        {"roll":26, "name":"Maryam", "father":"Alam Zaib"},
+        {"roll":27, "name":"Amsha", "father":"Roman"},
+        {"roll":28, "name":"Arisha", "father":"Bahadr Said"},
+        {"roll":29, "name":"Hira Noor", "father":"Ishaq Ahmad"},
+        {"roll":30, "name":"Adan", "father":"Sohail"},
+        {"roll":31, "name":"Eshal", "father":"Amjad"},
+        {"roll":32, "name":"Elma", "father":"Hayat Ullah"},
+        {"roll":33, "name":"Umm-e-Aiman", "father":"Missing"},
+        {"roll":34, "name":"Manal", "father":"Umar Habib"},
+        {"roll":35, "name":"Rida", "father":"Shah Nawaz"},
+        {"roll":36, "name":"Anfal", "father":"Luqman Ali"},
+        {"roll":37, "name":"Azan", "father":"Mehboob"},
+        {"roll":38, "name":"Fatima", "father":"Muhammad Ayaz"},
+        {"roll":39, "name":"Mehra", "father":"Saleem"},
+        {"roll":40, "name":"Tayyab", "father":"???"},
+        {"roll":41, "name":"M. Asim Ibad", "father":"Ibad Ullah"},
+        {"roll":42, "name":"Umaima", "father":"Farvez"}
+      ],
+      // ---- Class: Nur ----
+      "Nur": [
+        {"roll":1, "name":"Eman", "father":"Hamid"},
+        {"roll":2, "name":"Alyan", "father":"Khaliq"},
+        {"roll":3, "name":"Mubashir", "father":"Muhammad Zed"},
+        {"roll":4, "name":"Ahmad", "father":"Riaz ul Haq"},
+        {"roll":5, "name":"Younas", "father":"Yousaf"},
+        {"roll":6, "name":"Bin Yameen", "father":"Umar Rahman"},
+        {"roll":7, "name":"Zeeshan", "father":"Hasham"},
+        {"roll":8, "name":"Ilyas", "father":"Haleem"},
+        {"roll":9, "name":"Maimoona", "father":"Aman"},
+        {"roll":10, "name":"Fatima", "father":"Umar Rahman"},
+        {"roll":11, "name":"Romisa Bibi", "father":"Sher Dad Khan"},
+        {"roll":12, "name":"Areeba", "father":"Asif"},
+        {"roll":13, "name":"Warisha", "father":"Younas"},
+        {"roll":14, "name":"Arisha", "father":"Younas"},
+        {"roll":15, "name":"Rida", "father":"Sanobar"},
+        {"roll":16, "name":"Elma Nisar", "father":"Nisar Ulhaq"},
+        {"roll":17, "name":"Roman", "father":"Pasha Jan"},
+        {"roll":18, "name":"Sulima Naseer", "father":"Naseer ud Din"},
+        {"roll":19, "name":"Hammad", "father":"Abdur Rahman"},
+        {"roll":20, "name":"Hasnain", "father":"Sardar"},
+        {"roll":21, "name":"Iram Naeem", "father":"Naeem Ud Din"},
+        {"roll":22, "name":"Anabia", "father":"Fayaz"},
+        {"roll":23, "name":"Zarkab", "father":"Imran"},
+        {"roll":24, "name":"Hanzala", "father":"Rahm Dad"},
+        {"roll":25, "name":"Hisham", "father":"Adnan"},
+        {"roll":26, "name":"USA AMIR", "father":"AMIR RAHMAN"},
+        {"roll":27, "name":"Faria", "father":"Aftab"},
+        {"roll":28, "name":"Azlan", "father":"Iltaf"},
+        {"roll":29, "name":"Arham", "father":"Shafi Ullah"},
+        {"roll":30, "name":"Anoosha", "father":"Shafi Ullah"}
+      ],
+      // ---- Class: PG A ----
+      "PG A": [
+        {"roll":1, "name":"Muddasir", "father":"Farooq"},
+        {"roll":2, "name":"Zain", "father":"Noor Ali"},
+        {"roll":3, "name":"Ayan", "father":"Numan"},
+        {"roll":4, "name":"Marwan", "father":"Farman"},
+        {"roll":5, "name":"Saftain", "father":"Fayaz"},
+        {"roll":6, "name":"Umar", "father":"Zakir"},
+        {"roll":7, "name":"Hasan", "father":"Fervez"},
+        {"roll":8, "name":"Irham", "father":"Akram"},
+        {"roll":9, "name":"Abdur Rahman", "father":"F Rahman"},
+        {"roll":10, "name":"Afan", "father":"F Afan"},
+        {"roll":11, "name":"Arisha", "father":"Waqas"},
+        {"roll":12, "name":"Safwa", "father":"Fayaz"},
+        {"roll":13, "name":"Safa Amir", "father":"Amir Rahman"},
+        {"roll":14, "name":"Zunaira", "father":"Yaseen"},
+        {"roll":15, "name":"Haya", "father":"Tamreez"},
+        {"roll":16, "name":"Habiba Rahim", "father":"Rahim Badshah"},
+        {"roll":17, "name":"Meerab", "father":"missing"},
+        {"roll":18, "name":"Haifa", "father":"Sharif"},
+        {"roll":19, "name":"Umar Hussain", "father":"Zakir Hussain"},
+        {"roll":20, "name":"Marwa Bibi", "father":"Dilawar Khan"},
+        {"roll":21, "name":"Muhammad Affan", "father":"Missing"},
+        {"roll":22, "name":"Abdur Rahman", "father":"Farmanullah"},
+        {"roll":23, "name":"Gulnain", "father":"Zakir Ullah"},
+        {"roll":24, "name":"Arisha Waqas", "father":"Waqas Ahmad"},
+        {"roll":25, "name":"Aatif Kashif", "father":"Kashif Khan"}
+      ],
+      // ---- Class: PG B ----
+      "PG B": [
+        {"roll":1, "name":"Danyal", "father":"Sufaid Gul"},
+        {"roll":2, "name":"Haris", "father":"Imrooz"},
+        {"roll":3, "name":"Shahir", "father":"Said Rasool"},
+        {"roll":4, "name":"Rohan", "father":"Tawheed"},
+        {"roll":5, "name":"Zakriya", "father":"Saif ur Rahman"},
+        {"roll":6, "name":"Mursi", "father":"Manzoor"},
+        {"roll":7, "name":"Azlan", "father":"Nawsheer"},
+        {"roll":8, "name":"Afan", "father":"Noor Muhammad"},
+        {"roll":9, "name":"Safwan Qazi", "father":"Imran Khan"},
+        {"roll":10, "name":"Muhammad Abuzar", "father":"Hassan Sultan"},
+        {"roll":11, "name":"Husna", "father":"Arif"},
+        {"roll":12, "name":"Eishmal", "father":"Yar Muhammad"},
+        {"roll":13, "name":"Dua", "father":"Noor Muhammad"},
+        {"roll":14, "name":"Nadia", "father":"Shahiryar"},
+        {"roll":15, "name":"Zunira", "father":"Fawad"},
+        {"roll":16, "name":"Safoora", "father":"Gul Muhammad"},
+        {"roll":17, "name":"Horain", "father":"Asif"},
+        {"roll":18, "name":"Marwa", "father":"missing"},
+        {"roll":19, "name":"Muawiyah", "father":"Abdul Latif"},
+        {"roll":20, "name":"Murtaza Qazi", "father":"Qazi Rahman"},
+        {"roll":21, "name":"Atif", "father":"Hanif Ullah"},
+        {"roll":22, "name":"Ayeza", "father":"Abidullah Khan"},
+        {"roll":23, "name":"Maria", "father":"Burhan"},
+        {"roll":24, "name":"Ahmad", "father":"Samiullah"},
+        {"roll":25, "name":"Manha Saeed`", "father":"Saeed Ullah"},
+        {"roll":26, "name":"Aamrian", "father":"Zia Ullah"},
+        {"roll":27, "name":"Ariba", "father":"Zia Ullah"},
+        {"roll":28, "name":"Ayaza", "father":"F Ayaza"}
+      ]
+    }
+  };
+  var rosters = EMPTY_ROSTERS.data;
+  var rosterOrder = EMPTY_ROSTERS.order.slice();
+
+  /* ---------- Live roster from Google Sheet (Roll/Name/Father only) ----------
+     The sheet is published as CSV with columns: Class, Roll Number, Name, Father Name.
+     This is now the ONLY source of student rosters. On every load we try to fetch
+     it fresh; if that fails (offline, no connection), we fall back to the last
+     successfully fetched copy saved in localStorage, so a class that has loaded
+     at least once before still works offline. */
+  var ROSTER_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7r999hRMZS0dkJVQjiHdXPbruNVch7ZF3dOqCInpkCVB9Or87E3m291HBkz-5LwIBhy4efRPse4MI/pub?output=csv";
+  var ROSTER_CACHE_KEY = "studentMarksSheet.rosterCache.v1";
+
+  // Show last-known data immediately (from localStorage) while the fresh fetch runs.
+  (function loadCachedRostersAtStartup(){
+    try{
+      var cached = localStorage.getItem(ROSTER_CACHE_KEY);
+      if(cached){
+        var parsed = JSON.parse(cached);
+        if(parsed && parsed.data){
+          rosters = parsed.data;
+          rosterOrder = parsed.order ? parsed.order.slice() : [];
+        }
+      }
+    }catch(e){}
+  })();
+
+  function parseCsv(text){
+    var rows = [], row = [], field = "", inQuotes = false;
+    for(var i=0;i<text.length;i++){
+      var c = text[i];
+      if(inQuotes){
+        if(c === '"'){
+          if(text[i+1] === '"'){ field += '"'; i++; } else { inQuotes = false; }
+        } else field += c;
+      } else {
+        if(c === '"') inQuotes = true;
+        else if(c === ','){ row.push(field); field = ""; }
+        else if(c === '\n' || c === '\r'){
+          if(c === '\r' && text[i+1] === '\n') i++;
+          row.push(field); field = ""; rows.push(row); row = [];
+        } else field += c;
+      }
+    }
+    if(field.length || row.length){ row.push(field); rows.push(row); }
+    return rows.filter(function(r){ return r.length>1 || (r[0]||"").trim()!==""; });
+  }
+
+  function buildRostersFromCsvRows(rows){
+    if(!rows.length) return null;
+    var header = rows[0].map(function(h){ return (h||"").trim().toLowerCase(); });
+    var iCls = header.indexOf("class");
+    var iRoll = header.indexOf("roll number"); if(iRoll===-1) iRoll = header.indexOf("roll");
+    var iName = header.indexOf("name");
+    var iFather = header.indexOf("father name"); if(iFather===-1) iFather = header.indexOf("father");
+    if(iCls===-1 || iRoll===-1 || iName===-1) return null;
+    var order = [], data = {};
+    for(var r=1;r<rows.length;r++){
+      var row = rows[r];
+      var cls = (row[iCls]||"").trim();
+      var name = (row[iName]||"").trim();
+      if(!cls || !name) continue;
+      var roll = parseInt(row[iRoll], 10);
+      if(!roll || roll<1) continue;
+      var father = iFather>-1 ? (row[iFather]||"").trim() : "";
+      if(!data[cls]){ data[cls] = []; order.push(cls); }
+      data[cls].push({ roll:roll, name:name, father:father });
+    }
+    return order.length ? { order:order, data:data } : null;
+  }
+
+  function applyFetchedRosters(parsed){
+    rosters = parsed.data;
+    rosterOrder = parsed.order.slice();
+    refreshClassOptions();
+    if(state.cls && rosters[state.cls] && rosters[state.cls].length){
+      loadClassRoster(state.cls);
+    }
+    render();
+  }
+
+  function loadRostersFromSheet(){
+    var freshUrl = ROSTER_CSV_URL + (ROSTER_CSV_URL.indexOf("?") > -1 ? "&" : "?") + "_ts=" + Date.now();
+    fetch(freshUrl, { cache:"no-store" }).then(function(res){
+      if(!res.ok) throw new Error("network response not ok");
+      return res.text();
+    }).then(function(text){
+      var parsed = buildRostersFromCsvRows(parseCsv(text));
+      if(parsed){
+        try{ localStorage.setItem(ROSTER_CACHE_KEY, JSON.stringify(parsed)); }catch(e){}
+        applyFetchedRosters(parsed);
+      }
+    }).catch(function(){
+      try{
+        var cached = localStorage.getItem(ROSTER_CACHE_KEY);
+        if(cached){ applyFetchedRosters(JSON.parse(cached)); }
+      }catch(e){}
+    });
+  }
+
+  function classList(){ return rosterOrder.length ? rosterOrder : CLASSES; }
+  function refreshClassOptions(){
+    var cur = state.cls;
+    fillSelect($("cls"), classList(), "Select class");
+    if(cur && classList().indexOf(cur) > -1){ $("cls").value = cur; }
+  }
+
+  var state = { students:[], school:"", exam:"", cls:"", subSel:"", subOther:"", total:100, passing:40 };
+  var $ = function(id){ return document.getElementById(id); };
+
+  function load(){
+    /* students, test, class, subject, marks: always start a fresh entry on reload */
+    try{
+      var sc = localStorage.getItem(KEY_SCHOOL);
+      if(sc === null){                                   // pick up the name saved by the older version
+        var old = localStorage.getItem("studentMarksSheet.v3");
+        sc = old ? (JSON.parse(old).school || "") : "";
+      }
+      state.school = sc || "";
+    }catch(e){}
+  }
+  function save(){
+    try{ localStorage.setItem(KEY_SCHOOL, state.school || ""); }catch(e){}
+  }
+
+  /* Loads the selected class's roster (roll/name/father) straight into the student list */
+  function loadClassRoster(cls){
+    var roster = rosters[cls];
+    if(roster && roster.length){
+      state.students = roster.map(function(r){
+        return { roll:r.roll, name:r.name, fatherName:r.father||"", marks:0, status:"present" };
+      });
+    } else if(!state.students.length){
+      addDummyStudents(); // no roster uploaded for this class -- fall back to editable placeholders
+    }
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function fmt(n){ return (Math.round(n*10)/10).toString(); }
+  function pct(m){ return state.total>0 ? (m/state.total)*100 : 0; }
+  function passed(m){ return m >= state.passing; }
+  function grade(m){
+    if(!passed(m)) return "F";
+    var p = pct(m);
+    if(p>=80) return "A+";
+    if(p>=70) return "A";
+    if(p>=60) return "B";
+    if(p>=50) return "C";
+    return "D";
+  }
+  function stOf(s){ return s.status==="absent" || s.status==="leave" ? s.status : "present"; }
+  function away(s){ return stOf(s)!=="present"; }
+  function stLabel(s){ return stOf(s)==="absent" ? "Absent" : stOf(s)==="leave" ? "Leave" : "Present"; }
+  function subject(){ return state.subSel==="__other" ? (state.subOther||"").trim() : state.subSel; }
+  function schoolUpper(){ return (state.school||"").trim().toUpperCase(); }
+  function testLine(){
+    var t = (state.exam||"").trim(), c = state.cls, sb = subject();
+    return [t, c ? "Class: "+c : "", sb].filter(Boolean).join("  |  ");
+  }
+  function pdfLine(){   /* PDF only: test | class name only | subject */
+    return [(state.exam||"").trim(), state.cls, subject()].filter(Boolean).join("  |  ");
+  }
+  function header(){
+    return [subject(), state.cls].filter(Boolean).join(" - ") || "Student Marks Sheet";
+  }
+
+  /* Every word starts with a capital letter (as soon as the user types a space) */
+  function capWords(el){
+    var v = el.value, s = el.selectionStart, e = el.selectionEnd;
+    var n = v.replace(/(^|\s)(\S)/g, function(m,a,b){ return a + b.toUpperCase(); });
+    if(n !== v){
+      el.value = n;
+      try{ el.setSelectionRange(s,e); }catch(err){}
+    }
+  }
+
+  /* Messages */
+  function showMsg(t){
+    var m = $("msg");
+    m.textContent = t || "";
+    m.className = t ? "msg err" : "msg";
+  }
+
+  /* Sorted list with missing roll numbers filled in */
+  function buildRows(){
+    var list = state.students.slice().sort(function(a,b){ return a.roll-b.roll; });
+    if(!list.length) return [];
+    var map = {};
+    list.forEach(function(s){ map[s.roll] = s; });
+    var min = Math.min(1, list[0].roll), max = list[list.length-1].roll, out = [];
+    for(var r=min; r<=max; r++) out.push(map[r] ? {s:map[r]} : {missing:r});
+    return out;
+  }
+  /* ---------- Render ---------- */
+  function render(){
+    var rows = buildRows();
+
+    $("addFormBox").classList.toggle("hidden", !!state.cls);
+    $("clsHint").classList.toggle("hidden", !state.cls);
+    document.body.classList.toggle("marks-cls-active", !!state.cls);
+
+    var step2 = $("step2Card"), listSec = $("listSection");
+    if(state.cls){
+      listSec.parentNode.insertBefore(step2, listSec.nextSibling);
+    } else {
+      step2.parentNode.insertBefore(step2, listSec);
+    }
+
+    /* screen table */
+    var tb = $("rows");
+    var addRowFooter = '<tr class="addrow"><td colspan="8" style="text-align:center; padding:10px">'+
+      '<button type="button" class="btn-sun btn-small" data-addrow="1">+ Add student</button></td></tr>';
+    if(!rows.length){
+      tb.innerHTML = '<tr><td class="empty" colspan="8">No students yet. Add a row above and fill it in.</td></tr>' + addRowFooter;
+    } else {
+      tb.innerHTML = rows.map(function(x){
+        if(x.missing){
+          return '<tr class="missing"><td class="roll">'+x.missing+'</td>'+
+                 '<td>&mdash;</td><td colspan="5" class="na">Result not available</td><td></td></tr>';
+        }
+        var s = x.s, ok = passed(s.marks), aw = away(s);
+        var done = aw || (s.marks && s.marks > 0);
+        var rollCell = '<td class="roll"><input type="number" class="roll-input" data-roll="'+s.roll+'" value="'+s.roll+'" min="1" step="1"></td>';
+        var nameCell = '<td class="name"><input type="text" class="name-input" data-roll="'+s.roll+'" value="'+esc(s.name)+'" placeholder="Name" style="width:100%"></td>';
+        var fatherCell = '<td class="name"><input type="text" class="father-input" data-roll="'+s.roll+'" value="'+esc(s.fatherName||"")+'" placeholder="Father name" style="width:100%"></td>';
+        var marksCell = aw
+          ? '<td class="num"></td>'
+          : '<td class="num"><input type="number" class="marks-input" data-roll="'+s.roll+'" value="'+(s.marks ? s.marks : "")+'" step="any" min="0" max="'+state.total+'" placeholder="Marks" inputmode="decimal" enterkeyhint="next"></td>';
+        return '<tr'+(done ? ' class="row-done"' : '')+'>'+
+          rollCell+
+          nameCell+
+          fatherCell+
+          marksCell+
+          '<td class="num">'+(aw ? '<span class="dash">&mdash;</span>' : fmt(pct(s.marks))+'%')+'</td>'+
+          '<td class="grade">'+(aw ? '<span class="dash">&mdash;</span>' : grade(s.marks))+'</td>'+
+          (aw ? '<td><span class="sbadge '+stOf(s)+'">'+stLabel(s)+'</span></td>' : '<td class="'+(ok?'pass':'fail')+'">'+(ok?'Pass':'Fail')+'</td>')+
+          '<td><div class="actions">'+
+            '<button class="btn-del btn-small" data-del="'+s.roll+'">Delete</button>'+
+          '</div></td></tr>';
+      }).join("") + addRowFooter;
+    }
+
+    /* tiles */
+    var n = state.students.length;
+    if(n){
+      var pres = state.students.filter(function(s){ return !away(s); });
+      var nAbs = state.students.filter(function(s){ return stOf(s)==="absent"; }).length;
+      var nLev = state.students.filter(function(s){ return stOf(s)==="leave"; }).length;
+      var sub = "Students" + (nAbs ? " · "+nAbs+" absent" : "") + (nLev ? " · "+nLev+" leave" : "");
+      var html = '<div class="tile sun"><b>'+n+'</b><small>'+sub+'</small></div>';
+      if(pres.length){
+        var sum = pres.reduce(function(a,s){ return a+s.marks; },0);
+        var avg = sum/pres.length;
+        var top = pres.reduce(function(a,s){ return s.marks>a.marks ? s : a; });
+        var p = pres.filter(function(s){ return passed(s.marks); }).length;
+        html +=
+          '<div class="tile teal"><b>'+fmt(avg)+'</b><small>Average ('+fmt(pct(avg))+'%)</small></div>'+
+          '<div class="tile navy"><b>'+fmt(top.marks)+'</b><small>Highest: '+esc(top.name)+'</small></div>'+
+          '<div class="tile"><b>'+Math.round(p/pres.length*100)+'%</b><small>Passed ('+p+' of '+pres.length+')</small></div>';
+      }
+      $("tiles").innerHTML = html;
+    } else {
+      $("tiles").innerHTML = "";
+    }
+
+    renderPrint(rows);
+  }
+
+  function infoLine(){
+    return "Total Marks: "+fmt(state.total)+"   |   Passing Marks: "+fmt(state.passing)+"   |   Date: "+new Date().toLocaleDateString("en-GB");
+  }
+
+  /* PDF: cut the list into pages of exactly PER_PAGE rows */
+  function renderPrint(rows){
+    var pages = [];
+    for(var i=0; i<rows.length; i+=PER_PAGE) pages.push(rows.slice(i, i+PER_PAGE));
+    var total = pages.length;
+    var cols = '<colgroup><col style="width:9%"><col style="width:24%"><col style="width:24%"><col style="width:12%"><col style="width:14%"><col style="width:17%"></colgroup>';
+    $("printArea").innerHTML = pages.map(function(pg, idx){
+      var body = pg.map(function(x){
+        if(x.missing){
+          return '<tr class="missing"><td class="roll">'+x.missing+'</td><td>&mdash;</td><td colspan="4" class="na">Result not available</td></tr>';
+        }
+        var s = x.s, ok = passed(s.marks), aw = away(s);
+        return '<tr>'+
+          '<td class="roll">'+s.roll+'</td>'+
+          '<td class="nm">'+esc(s.name)+'</td>'+
+          '<td class="nm">'+esc(s.fatherName||"")+'</td>'+
+          '<td class="mk">'+fmt(s.marks)+'</td>'+
+          '<td class="grade">'+(aw ? '&mdash;' : grade(s.marks))+'</td>'+
+          '<td>'+(aw ? '<span class="badge '+stOf(s)+'">'+stLabel(s)+'</span>' : '<span class="badge '+(ok?'pass':'fail')+'">'+(ok?'Passed':'Failed')+'</span>')+'</td></tr>';
+      }).join("");
+      return '<section class="page">'+
+        '<div class="ph1">'+esc(schoolUpper())+'</div>'+
+        '<div class="ph2">'+esc(pdfLine())+'</div>'+
+        '<div class="ph3"><span>'+esc(infoLine())+'</span><span>Page '+(idx+1)+' of '+total+'</span></div>'+
+        '<div class="hbar"><table class="pt">'+cols+
+          '<thead><tr><th>Roll no.</th><th>Name</th><th>Father name</th><th>Marks</th><th>Grade</th><th>Result</th></tr></thead>'+
+        '</table></div>'+
+        '<div class="tw"><table class="pt">'+cols+
+          '<tbody>'+body+'</tbody>'+
+        '</table></div></section>';
+    }).join("");
+  }
+
+  /* ---------- WhatsApp text ---------- */
+  function waHead(){
+    var t = (state.exam||"").trim();
+    var l2 = [t, state.cls ? "Class: "+state.cls : ""].filter(Boolean).join(" | ");
+    var lines = ["*"+schoolUpper()+"*"];
+    if(l2) lines.push(l2);
+    if(subject()) lines.push("Subject: "+subject());
+    lines.push("Total Marks: "+fmt(state.total)+" | Passing Marks: "+fmt(state.passing));
+    lines.push("");
+    lines.push("S.No | Name | Marks Obtained | Result");
+    return lines;
+  }
+  function waRow(s){
+    var ok = passed(s.marks), nm = s.name.replace(/\*/g,"");
+    if(away(s)) return s.roll+". "+nm+" | 0 | "+stLabel(s);
+    return s.roll+". "+(ok ? "*"+nm+"*" : nm)+" | "+fmt(s.marks)+" | "+(ok?"Passed":"Failed");
+  }
+  function listText(){
+    var lines = waHead();
+    buildRows().forEach(function(x){
+      lines.push(x.missing ? x.missing+". Result not available" : waRow(x.s));
+    });
+    return lines.join("\n");
+  }
+  function openWA(text, phone){
+    window.open("https://wa.me/"+(phone||"")+"?text="+encodeURIComponent(text), "_blank", "noopener");
+  }
+
+  /* ---------- Dropdowns ---------- */
+  function fillSelect(el, list, placeholder, extra){
+    var html = '<option value="">'+placeholder+'</option>' +
+      list.map(function(v){ return '<option value="'+esc(v)+'">'+esc(v)+'</option>'; }).join("");
+    if(extra) html += extra;
+    el.innerHTML = html;
+  }
+  refreshClassOptions();
+  fillSelect($("subSel"), SUBJECTS, "Select subject", '<option value="__other">Other (type it)</option>');
+
+  function syncSubjectBox(){ $("subOtherBox").classList.toggle("hidden", state.subSel!=="__other"); }
+
+  /* When a class is picked and no roster was uploaded for it, drop in 3 placeholder
+     students so marks can be typed straight into the table below. */
+  function addDummyStudents(){
+    if(state.students.length) return;
+    ["Student 1","Student 2","Student 3"].forEach(function(nm,i){
+      state.students.push({ roll:i+1, name:nm, fatherName:"", marks:0, status:"present" });
+    });
+  }
+  $("cls").addEventListener("change", function(){
+    var newCls = $("cls").value;
+    state.cls = newCls;
+    state.students = [];
+    if(newCls) loadClassRoster(newCls);
+    save(); render();
+  });
+  $("subSel").addEventListener("change", function(){
+    state.subSel = $("subSel").value; syncSubjectBox(); save(); render();
+    if(state.subSel==="__other") $("subOther").focus();
+  });
+
+  /* ---------- Text fields (auto capital letters) ---------- */
+  ["school","exam","subOther"].forEach(function(id){
+    var key = id==="school" ? "school" : id==="exam" ? "exam" : "subOther";
+    $(id).addEventListener("input", function(){
+      capWords($(id));
+      state[key] = $(id).value;
+      save(); render();
+    });
+  });
+  $("sname").addEventListener("input", function(){ capWords($("sname")); });
+
+  /* ---------- Total / passing marks ---------- */
+  function highestMarks(){
+    return state.students.reduce(function(a,s){ return s.marks>a ? s.marks : a; }, 0);
+  }
+  $("total").addEventListener("input", function(){
+    var t = parseFloat($("total").value);
+    $("total").classList.remove("bad");
+    if(!(t>0)){ showMsg("Error: Total marks must be more than 0."); $("total").classList.add("bad"); return; }
+    if(t < highestMarks()){
+      showMsg("Error: Total marks ("+fmt(t)+") cannot be less than marks already entered ("+fmt(highestMarks())+")."); 
+      $("total").classList.add("bad"); return;
+    }
+    if(t < state.passing){
+      showMsg("Error: Total marks ("+fmt(t)+") cannot be less than passing marks ("+fmt(state.passing)+"). Change passing marks first.");
+      $("total").classList.add("bad"); return;
+    }
+    showMsg(""); state.total = t; save(); render();
+  });
+  $("passing").addEventListener("input", function(){
+    var q = parseFloat($("passing").value);
+    $("passing").classList.remove("bad");
+    if(isNaN(q) || q<0){ showMsg("Error: Enter valid passing marks."); $("passing").classList.add("bad"); return; }
+    if(q > state.total){
+      showMsg("Error: Passing marks ("+fmt(q)+") cannot be more than total marks ("+fmt(state.total)+").");
+      $("passing").classList.add("bad"); return;
+    }
+    showMsg(""); state.passing = q; save(); render();
+  });
+  /* If a wrong value was left in the box, put the last valid one back */
+  ["total","passing"].forEach(function(id){
+    $(id).addEventListener("change", function(){
+      $(id).value = state[id]; $(id).classList.remove("bad");
+    });
+  });
+
+  /* ---------- Marks: live error while typing ---------- */
+  function getStatus(){
+    var r = document.querySelector('input[name="sst"]:checked');
+    return r ? r.value : "present";
+  }
+  function setStatus(v){
+    var r = document.querySelector('input[name="sst"][value="'+v+'"]');
+    if(r) r.checked = true;
+    syncStatus();
+  }
+  /* Absent / Leave: marks are fixed at 0 and the box is locked */
+  function syncStatus(){
+    var m = $("smarks");
+    if(getStatus()==="present"){
+      if(m.disabled){ m.disabled = false; m.value = ""; }
+    } else {
+      m.disabled = true; m.value = "0"; m.classList.remove("bad");
+    }
+    checkMarks();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="sst"]'), function(r){
+    r.addEventListener("change", function(){
+      syncStatus();
+      if(this.value==="absent" || this.value==="leave") addStudent();
+    });
+  });
+
+  function checkMarks(){
+    var v = parseFloat($("smarks").value);
+    if(!isNaN(v) && v > state.total){
+      showMsg("Error: Obtained marks ("+fmt(v)+") cannot be more than total marks ("+fmt(state.total)+"). Entry will not be added.");
+      $("smarks").classList.add("bad"); return false;
+    }
+    $("smarks").classList.remove("bad");
+    if($("msg").classList.contains("err") && /Obtained marks/.test($("msg").textContent)) showMsg("");
+    return true;
+  }
+  $("smarks").addEventListener("input", checkMarks);
+
+  /* ---------- Add student ---------- */
+  function addStudent(){
+    var roll = parseInt($("sroll").value, 10);
+    var name = $("sname").value.replace(/\s+/g," ").trim();
+    var status = getStatus();
+    var rawMarks = $("smarks").value.trim();
+    if(status==="present" && (rawMarks==="-1" || rawMarks==="-2")){
+      status = rawMarks==="-1" ? "absent" : "leave";
+    }
+    var marks = status==="present" ? parseFloat(rawMarks) : 0;
+    if(!(roll>0)){ showMsg("Error: Enter a valid roll number."); $("sroll").focus(); return; }
+    if(state.students.some(function(s){ return s.roll===roll; })){
+      showMsg("Error: Roll number "+roll+" is already added."); $("sroll").focus(); return;
+    }
+    if(!name){ showMsg("Error: Enter the student's name."); $("sname").focus(); return; }
+    if(status==="present" && (isNaN(marks) || marks<0)){ showMsg("Error: Enter valid marks."); $("smarks").focus(); return; }
+    if(marks > state.total){
+      showMsg("Error: Obtained marks ("+fmt(marks)+") cannot be more than total marks ("+fmt(state.total)+"). Entry not added.");
+      $("smarks").classList.add("bad"); $("smarks").focus(); return;
+    }
+    var rolls = state.students.map(function(s){ return s.roll; }).concat(roll);
+    if(Math.max.apply(null,rolls)-Math.min.apply(null,rolls) > MAX_SPAN){
+      showMsg("Error: Roll numbers are too far apart. Please check the roll number."); $("sroll").focus(); return;
+    }
+    state.students.push({ roll:roll, name:name, fatherName:"", marks:marks, status:status });
+    setStatus("present");
+    $("sroll").value=""; $("sname").value=""; $("smarks").value=""; $("smarks").classList.remove("bad");
+    showMsg(""); save(); render(); $("sroll").focus();
+  }
+  $("addBtn").addEventListener("click", addStudent);
+  function addEmptyRow(){
+    var nextRoll = state.students.length
+      ? Math.max.apply(null, state.students.map(function(s){ return s.roll; }))+1
+      : 1;
+    state.students.push({ roll:nextRoll, name:"", fatherName:"", marks:0, status:"present" });
+    save(); render();
+    var last = document.querySelector('.name-input[data-roll="'+nextRoll+'"]');
+    if(last) last.focus();
+  }
+  $("addRowBtn").addEventListener("click", addEmptyRow);
+  $("sroll").addEventListener("keydown",  function(e){ if(e.key==="Enter") $("sname").focus(); });
+  $("sname").addEventListener("keydown",  function(e){ if(e.key==="Enter"){ if(getStatus()==="present") $("smarks").focus(); else addStudent(); } });
+  $("smarks").addEventListener("keydown", function(e){ if(e.key==="Enter") addStudent(); });
+
+  /* ---------- Table buttons ---------- */
+  function findByRoll(r){
+    for(var i=0;i<state.students.length;i++) if(state.students[i].roll===r) return i;
+    return -1;
+  }
+  $("rows").addEventListener("click", function(e){
+    var t = e.target;
+    if(t.dataset.addrow!==undefined){ addEmptyRow(); return; }
+    if(t.dataset.del!==undefined){
+      var i = findByRoll(+t.dataset.del);
+      if(i>-1){ state.students.splice(i,1); save(); render(); }
+    }
+  });
+  /* Shared: read a marks-input's value into the student record (used by both change and Tab/Enter navigation) */
+  function commitMarksValue(t){
+    var i = findByRoll(+t.dataset.roll);
+    if(i<0) return;
+    var raw = t.value.trim();
+    if(raw==="-1" || raw==="-2"){
+      state.students[i].status = raw==="-1" ? "absent" : "leave";
+      state.students[i].marks = 0;
+      return;
+    }
+    var v = parseFloat(t.value);
+    if(isNaN(v) || v<0) v = 0;
+    if(v > state.total) v = state.total;
+    state.students[i].marks = v;
+    state.students[i].status = "present";
+  }
+  $("rows").addEventListener("change", function(e){
+    var t = e.target;
+    var i = findByRoll(+t.dataset.roll);
+    if(i<0) return;
+    if(t.classList.contains("marks-input")){
+      commitMarksValue(t);
+      save(); render();
+    } else if(t.classList.contains("name-input")){
+      state.students[i].name = t.value.replace(/\s+/g," ").trim();
+      save(); render();
+    } else if(t.classList.contains("father-input")){
+      state.students[i].fatherName = t.value.replace(/\s+/g," ").trim();
+      save(); render();
+    } else if(t.classList.contains("roll-input")){
+      var nr = parseInt(t.value, 10);
+      if(!(nr>0)){ showMsg("Error: Enter a valid roll number."); render(); return; }
+      if(state.students.some(function(s,j){ return j!==i && s.roll===nr; })){
+        showMsg("Error: Roll number "+nr+" is already used."); render(); return;
+      }
+      state.students[i].roll = nr;
+      showMsg(""); save(); render();
+    }
+  });
+  /* Tab / Enter (incl. mobile "Next" key) jumps straight from one marks box to the next row's marks box */
+  $("rows").addEventListener("keydown", function(e){
+    var t = e.target;
+    if(!t.classList || !t.classList.contains("marks-input")) return;
+    if(e.key !== "Tab" && e.key !== "Enter") return;
+    if(e.key === "Tab" && e.shiftKey) return; // let Shift+Tab move backward normally
+    e.preventDefault();
+    var currentRoll = +t.dataset.roll;
+    commitMarksValue(t);
+    save(); render();
+    var inputs = document.querySelectorAll(".marks-input");
+    var next = null;
+    for(var k=0;k<inputs.length;k++){
+      if(+inputs[k].dataset.roll > currentRoll){ next = inputs[k]; break; }
+    }
+    if(next){ next.focus(); if(next.select) next.select(); }
+  });
+
+  /* ---------- Bottom buttons ---------- */
+  function scrollTop(){ $("msg").scrollIntoView({behavior:"smooth", block:"center"}); }
+  $("waAll").addEventListener("click", function(){
+    if(!state.students.length){ showMsg("Add at least one student first."); scrollTop(); return; }
+    openWA(listText(), "");
+  });
+  $("pdfBtn").addEventListener("click", function(){
+    if(!state.students.length){ showMsg("Add at least one student first."); return; }
+    var miss = [];
+    if(!state.school.trim()) miss.push("School name");
+    if(!state.exam.trim())   miss.push("Test name");
+    if(!state.cls)           miss.push("Class");
+    if(!subject())           miss.push("Subject");
+    if(miss.length){ showMsg("Error: Please fill in "+miss.join(", ")+" before saving the PDF."); scrollTop(); return; }
+    showMsg("");
+    var oldTitle = document.title;
+    document.title = header();               // becomes the PDF file name
+    document.body.classList.add("printing-marks");
+    window.print();
+    setTimeout(function(){
+      document.title = oldTitle;
+      document.body.classList.remove("printing-marks");
+    }, 500);
+  });
+  $("clearBtn").addEventListener("click", function(){
+    if(state.students.length && confirm("Delete all students?")){
+      state.students = []; save(); render();
+    }
+  });
+
+  /* ---------- Start ---------- */
+  load();
+  $("school").value = state.school||"";
+  $("exam").value = state.exam||"";
+  $("cls").value = state.cls||"";
+  $("subSel").value = state.subSel||"";
+  $("subOther").value = state.subOther||"";
+  $("total").value = state.total||100;
+  $("passing").value = (state.passing===0||state.passing>0) ? state.passing : 40;
+  syncSubjectBox();
+  render();
+  loadRostersFromSheet();
 })();
 
 /* ---------- GitHub Pages live-update cleanup ---------- */
