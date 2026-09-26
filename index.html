@@ -772,7 +772,9 @@ body::before{
 .tile.active{box-shadow:0 0 0 3px #fff, 0 0 0 6px rgba(255,138,42,.6), var(--tile-shadow)}
 .tile.active .tile-chev{transform:rotate(90deg)}
 
-.tab-panel.active{animation:none}
+/* entry animation for a whole tab/section when it opens — same rise-up-and-fade-in as the home tiles (incl. the marks-sheet tile) */
+.tab-panel.active{animation:riseIn .6s cubic-bezier(.2,.8,.2,1) both}
+@media(prefers-reduced-motion:reduce){ .tab-panel.active{animation:none} }
 
 /* promo banner */
 .promo{
@@ -1055,6 +1057,7 @@ body.intro-done .profile-name{animation:none; opacity:1; transform:none}
    scoped to #tab-homework so nothing else in the app changes
    ===================================================================== */
 body.revealed:not(.intro-done) .tile:nth-child(5){animation:riseIn .8s cubic-bezier(.2,.8,.2,1) .98s backwards}
+body.revealed:not(.intro-done) .tile:nth-child(6){animation:riseIn .8s cubic-bezier(.2,.8,.2,1) 1.1s backwards}
 
 /* page look while the Homework page is open */
 body.view-hw{background:linear-gradient(160deg,#eaf5f4 0%,#f4fbf9 50%,#fff6e2 100%); background-attachment:fixed}
@@ -1281,44 +1284,14 @@ h1,.panel-title{font-weight:800; line-height:1.1; letter-spacing:.2px}
 
 /* ---------- Cards ---------- */
 #tab-marks .card{background:#fff; border-radius:22px; padding:16px 10px; margin-bottom:16px; box-shadow:var(--shadow)}
-body.view-marks{padding-left:6px; padding-right:6px}
-@media(max-width:430px){ body.view-marks{padding-left:4px; padding-right:4px} }
+body.view-marks,body.view-attendance,body.view-receipt,body.view-admission,body.view-reminder{padding-left:6px; padding-right:6px}
+@media(max-width:430px){ body.view-marks,body.view-attendance,body.view-receipt,body.view-admission,body.view-reminder{padding-left:4px; padding-right:4px} }
 #tab-marks .card h2{margin:0 0 10px; font-size:1.05rem; font-weight:600; display:flex; align-items:center; gap:10px}
 #tab-marks .step{display:inline-flex; align-items:center; justify-content:center; padding:8px 20px; border-radius:999px;
       background:linear-gradient(135deg,var(--orange),var(--orange-2)); color:#fff; font-size:.95rem; font-weight:600;
       box-shadow:0 6px 14px rgba(242,106,27,.28)}
 
 #tab-marks .grid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
-#tab-marks .ms-row{display:block}
-@media (min-width:900px){
-  #tab-marks .ms-row{display:grid; grid-template-columns:1fr 1.3fr; gap:16px; align-items:start}
-  #tab-marks .ms-row #step2Card{order:1; margin-bottom:0}
-  #tab-marks .ms-row #listSection{order:2; margin-bottom:0}
-}
-
-/* ---------- Desktop, class selected: student list detaches into its own
-   floating panel docked to the right edge of the screen (position:fixed,
-   so it can't stretch/inflate the grid rows of the left-side cards — that
-   was the earlier "big gap" bug). Everything else (title, test details,
-   add-students, tiles) just stays in its normal place on the left; we only
-   reserve room on the right via body padding so nothing sits under the
-   panel. Mobile is untouched — gated to >=900px and body.marks-cls-active,
-   which JS toggles only while a class is chosen. ---------- */
-@media (min-width:900px){
-  body.marks-cls-active{
-    --ms-panel-w: min(58vw, 860px);
-    padding-right: calc(var(--ms-panel-w) + 30px);
-  }
-  body.marks-cls-active .container{ max-width:360px }
-  body.marks-cls-active #tab-marks .ms-row{ grid-template-columns:1fr }
-  body.marks-cls-active #tab-marks #listSection{
-    position:fixed; top:64px; right:16px; bottom:16px;
-    width:var(--ms-panel-w); margin:0; z-index:6;
-    display:flex; flex-direction:column;
-    box-shadow:0 26px 54px rgba(16,40,60,.20), 0 2px 8px rgba(16,40,60,.06);
-  }
-  body.marks-cls-active #tab-marks #listSection .table-wrap{ flex:1; overflow:auto }
-}
 #tab-marks .wide{grid-column:1/-1}
 #tab-marks .grid.two{grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 10px}
 #tab-marks .grid.two label{font-size:.74rem; margin:0 0 2px 4px}
@@ -2029,8 +2002,6 @@ body.view-marks{padding-left:6px; padding-right:6px}
     </div>
   </section>
 
-  <!-- STEP 2 + LIST: side by side on desktop, stacked as before on mobile -->
-  <div class="ms-row">
   <!-- STEP 2 -->
   <section class="card" id="step2Card">
     <h2><span class="step">Add students</span></h2>
@@ -2082,7 +2053,6 @@ body.view-marks{padding-left:6px; padding-right:6px}
       </table>
     </div>
   </section>
-  </div>
 
   <div class="tiles" id="tiles"></div>
 </div>
@@ -2225,6 +2195,10 @@ function showSection(name){
   document.body.classList.add("view-section");
   document.body.classList.toggle("view-hw", name === "homework");
   document.body.classList.toggle("view-marks", name === "marks");
+  document.body.classList.toggle("view-attendance", name === "attendance");
+  document.body.classList.toggle("view-receipt", name === "receipt");
+  document.body.classList.toggle("view-admission", name === "admission");
+  document.body.classList.toggle("view-reminder", name === "reminder");
   window.scrollTo(0,0);
   if(name === "attendance"){
     checkAttendanceLock();
@@ -2244,7 +2218,10 @@ function showHome(){
   document.body.classList.add("view-home");
   document.body.classList.remove("view-hw");
   document.body.classList.remove("view-marks");
-  document.body.classList.remove("marks-cls-active");
+  document.body.classList.remove("view-attendance");
+  document.body.classList.remove("view-receipt");
+  document.body.classList.remove("view-admission");
+  document.body.classList.remove("view-reminder");
   if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
   window.scrollTo(0,0);
 }
@@ -4092,7 +4069,6 @@ showHome();
 
     $("addFormBox").classList.toggle("hidden", !!state.cls);
     $("clsHint").classList.toggle("hidden", !state.cls);
-    document.body.classList.toggle("marks-cls-active", !!state.cls);
 
     var step2 = $("step2Card"), listSec = $("listSection");
     if(state.cls){
