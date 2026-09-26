@@ -2458,7 +2458,7 @@ buildGlitchTitle("marksTitle","MARKS SHEET");
     if(absent.length){
       absent.forEach((student,i)=>{ msg+=`${i+1}. ${student}\n`; });
     }else{
-      msg+="No absent students\n";
+      msg+="Alhamdull, All Present.\n";
     }
 
     msg+=`\n*STUDENTS ON LEAVE*\n`;
@@ -3127,7 +3127,7 @@ showHome();
   function refreshTally(){
     var rows = list.querySelectorAll(".hw-row"), flagged = 0;
     rows.forEach(function(r){ if(issueCount(r) > 0) flagged++; });
-    $("hw-tallyMain").textContent = flagged + (flagged === 1 ? " student flagged" : " students flagged");
+    $("hw-tallyMain").textContent = Reported + (Reported === 1 ? " student flagged" : " students Reported");
     $("hw-tallySub").textContent = rows.length + (rows.length === 1 ? " student added" : " students added");
   }
   function updateNumbers(){
@@ -3143,15 +3143,15 @@ showHome();
     row.innerHTML =
       '<div class="hw-top">' +
         '<div class="hw-num">' + count + '</div>' +
-        '<div class="hw-name"><input type="text" class="student-input" placeholder="Student name" autocomplete="off"></div>' +
+        '<div class="hw-name"><input type="text" class="student-input" placeholder="Student Name" autocomplete="off"></div>' +
         '<span class="hw-status">All good</span>' +
         '<button class="hw-remove" type="button" aria-label="Remove student">✕</button>' +
       '</div>' +
       '<div class="hw-checks">' +
-        '<label class="hw-chip"><input type="checkbox" class="book"><span class="ic">📚</span><span>بُک نہیں ہے۔</span></label>' +
-        '<label class="hw-chip"><input type="checkbox" class="notebook"><span class="ic">📓</span><span>کاپی نہیں ہے۔</span></label>' +
-        '<label class="hw-chip"><input type="checkbox" class="incomplete"><span class="ic">🚫</span><span>کاپی نامکمل ہے۔</span></label>' +
-        '<label class="hw-chip"><input type="checkbox" class="homework"><span class="ic">📝</span><span>ہوم ورک نہیں کیا ہے۔</span></label>' +
+        '<label class="hw-chip"><input type="checkbox" class="book"><span class="ic">📚</span><span>Book</span></label>' +
+        '<label class="hw-chip"><input type="checkbox" class="notebook"><span class="ic">📓</span><span>Note Book</span></label>' +
+        '<label class="hw-chip"><input type="checkbox" class="incomplete"><span class="ic">🚫</span><span>Incomplete N.Book</span></label>' +
+        '<label class="hw-chip"><input type="checkbox" class="homework"><span class="ic">📝</span><span>HomeWork Not Done.</span></label>' +
       '</div>';
 
     row.addEventListener("change", function(e){
@@ -3182,7 +3182,7 @@ showHome();
     if(!teacher){ toast("Please enter the teacher name."); teacherInput.focus(); return; }
     if(rows.length === 0){ toast("Please add at least one student."); return; }
 
-    var report = "*HOMEWORK & MATERIAL REPORT*\n\n" +
+    var report = "*STUDENT & MATERIAL REPORT*\n\n" +
                  "*Class:* " + className + "\n" +
                  "*Subject:* " + subject + "\n" +
                  "*Date:* " + date + "\n" +
@@ -3196,10 +3196,10 @@ showHome();
       var book = row.querySelector(".book").checked, notebook = row.querySelector(".notebook").checked,
           incomplete = row.querySelector(".incomplete").checked, homework = row.querySelector(".homework").checked;
       var issues = [];
-      if(book) issues.push("Book nahi hai");
-      if(notebook) issues.push("Notebook nahi hai");
-      if(incomplete) issues.push("Incomplete Notebook");
-      if(homework) issues.push("Homework nahi kiya");
+      if(book) issues.push("بُک نہیں ہے۔");
+      if(notebook) issues.push("کاپی نہیں ہے۔");
+      if(incomplete) issues.push("کاپی نامکمل ہے۔");
+      if(homework) issues.push("ہوم ورک نہیں کیا ہے۔");
       if(issues.length > 0) report += valid + ". *" + name + "* — " + issues.join(", ") + "\n";
     });
 
