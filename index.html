@@ -1119,7 +1119,7 @@ body.view-hw .hw-bg{display:block}
 .hw-dot{width:9px; height:9px; border-radius:50%; background:#ffb020; box-shadow:0 0 0 4px #fff3d6}
 
 .hw-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:11px}
-@media(max-width:480px){ .hw-grid{grid-template-columns:1fr} }
+@media(max-width:480px){ .hw-grid{grid-template-columns:repeat(2,1fr); gap:8px} }
 @media(min-width:900px){ .hw-grid{grid-template-columns:repeat(4,1fr)} }
 .hw-grid .hw-full{grid-column:1 / -1}
 #tab-homework label.hw-lab{display:block; margin:0 0 6px 3px; font-size:12px; font-weight:700; color:#5f7a80; text-transform:none; letter-spacing:0; opacity:1}
@@ -3983,6 +3983,7 @@ showHome();
       if(sc === null){                                   // pick up the name saved by the older version
         var old = localStorage.getItem("studentMarksSheet.v3");
         sc = old ? (JSON.parse(old).school || "") : "";
+        if(!sc) sc = "Punjkora Public High School";       // default school name on first use
       }
       state.school = sc || "";
     }catch(e){}
